@@ -29,17 +29,17 @@ class ClientRequest extends FormRequest
         ];        
     }
 
-    public function messages(){
-        return[
-            'required'=>'O campo :attribute é obrigatório.'
-        ];
-    }
-
     public function attributes()
     {
         return [
             'name'=>'nome',
             'fone'=>'telefone',
+        ];
+    }
+    
+    public function messages(){
+        return[
+            'required'=>'O campo :attribute é obrigatório.'
         ];
     }
 }

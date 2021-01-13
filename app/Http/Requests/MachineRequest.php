@@ -24,28 +24,35 @@ class MachineRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'=>'required',
-            'fone'=>'required',
-            'machine_type'=>'required',
-            'description'=>'required',
-            'breakdowns'=>'required',
+            
+            'machine_type' =>'required',
+            'brand'        =>'required',
+            'model'        =>'required',
+            'serial_number'=>'required',
+            'description'  =>'required',
+            'breakdowns'   =>'required',
+
+        ];
+    }    
+
+    public function attributes()
+    {
+        return [
+
+            'machine_type'  =>'tipo de computador',
+            'name'          =>'Nome',
+            'brand'         =>'marca',
+            'model'         =>'modelo',
+            'serial_number' =>'número de série',
+            'description'   =>'descrição',
+            'breakdowns'    =>'avarias',
+
         ];
     }
 
     public function messages(){
         return[
-            'required'=>'O campo :attribute é obrigatório.'
-        ];
-    }
-
-    public function attributes()
-    {
-        return [
-            'name'=>'required',
-            'fone'=>'required',
-            'machine_type'=>'required',
-            'description'=>'required',
-            'breakdowns'=>'required',
+            'required'=>'O campo :attribute é obrigatório.',
         ];
     }
 }

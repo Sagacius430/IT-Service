@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\machine;
+use App\client;
+use App\Http\Requests\ClientRequest;
+use App\Machine;
 use Illuminate\Http\Request;
 use App\Http\Requests\MachineRequest;
-use Facade\FlareClient\Http\Machine as HttpMachine;
-use PhpParser\Node\Stmt\TryCatch;
+use Facade\FlareClient\Http\Client as HttpClient;
+use GuzzleHttp\Client as GuzzleHttpClient;
+use Illuminate\Support\Facades\DB;
 
 
 class MachineController extends Controller
@@ -16,11 +19,13 @@ class MachineController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        $machine = machine::all();
-
-        return view('machine.index', compact('machine'));
+    public function index(Request $request, $id)
+    {        
+        $nome = Client::get('nome');
+        $id   = $id;
+        $machines = Machine::find(1);
+                                    //o compact envia a variável $machines para view
+        return view('clients.edit', compact('machines'));
     }
 
     /**
@@ -28,10 +33,12 @@ class MachineController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Client $client)
     {
-        return view('machine.create');
-    }
+        $machines = Machine::all();        
+
+        return view('machines.create', compact('machines', 'client'));
+    }    
 
     /**
      * Store a newly created resource in storage.
@@ -40,15 +47,43 @@ class MachineController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        try{
-            machine::create($request->all());
-        } catch(\Exception $e){
+    {    
+        //parei aqui
+        $url = $request->query();//teste
+        return $url;
 
-            return redirect()->route('client.index')->withErrors();
-        }
 
-        return redirect()->route('client.index')->with('msg_success','Cadastrado!');
+        // DB::beginTransaction();
+
+        // try{
+            // Machine::created(['client_id' => $request(Client::find(12))]);
+            Machine::create($request['machine']);
+           
+            // if('$machine')
+
+            return $request->all();
+
+
+            // $machine->client()->create($request['client']);
+
+            // foreach($request->machines as $machine){
+            //     $machine->machines()->create($machine);
+            // }
+
+        //     DB::commit();
+
+        // } catch{
+
+        //     DB::rolback();
+        //     return back()->with('msg_error', 'Erro no servidor ao cadastrar dispositivo.');
+
+        // }
+
+        // machine::create($request->all());        
+
+        return redirect()
+            ->route('machines.create')
+            ->with('msg_success','Cadastrado!');
 
     }
 
@@ -60,7 +95,7 @@ class MachineController extends Controller
      */
     public function show($id)
     {
-        //
+        // return view('clients.edit', ['machine' => Machine::findOrFail($id)]);
     }
 
     /**
@@ -71,8 +106,8 @@ class MachineController extends Controller
      */
     public function edit($id)
     {
-        $machine = machine::findOrFail($id);
-
+        $machine = Machine::findOrFail($id);
+       
         return view('client.edit', compact('machine'));
     }
 
@@ -85,12 +120,14 @@ class MachineController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $machine = machine::findOrFail($id);
+        $machine = Machine::findOrFail($id);
 
         $machine->update($request->all());
         $machine->save();
 
-        return redirect()->route('client.index')->with('msg_success', 'Atualizado!');
+        return redirect()
+            ->route('client.index')
+            ->with('msg_success', 'Atualizado!');
 
     }
 
@@ -102,10 +139,11 @@ class MachineController extends Controller
      */
     public function destroy($id)
     {
-        $machine = machine::findOrFail($id);
+        $machine = Machine::findOrFail($id);
 
         $machine->delete();
 
-        return redirect()->route('client.index');
+        return redirect()
+            ->route('client.index');
     }
 }
