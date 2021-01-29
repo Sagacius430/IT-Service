@@ -18,13 +18,15 @@
                 <div class="navbar-nav">
                     <a class="nav-item nav-link" href="{{ route('dashboard.index') }}">Painel</a>
                     <a class="nav-item nav-link" href="{{ route('clients.index') }}">Clientes</a>
-                    {{-- @if (auth()->user()->role == 'admin') --}}
-                        <a class="nav-item nav-link" href="{{ route('users.index') }}">Usuários</a>    
+                    {{-- @if (auth()->user()->role == 'admin') remover comentário--}} 
+                        <a class="nav-item nav-link" href="{{ route('users.index') }}">Usuários</a>   
+                        <a class="nav-item nav-link" href="{{ route('services.index') }}">Serviços</a>
+                        <a class="nav-item nav-link" href="{{ route('os.index') }}">Os</a>      
                     {{-- @endif --}}
                 </div>
             </div>
             <div class="d-flex align-items-center">
-                {{-- <span class="nav-item nav-link">{{ auth()->user()->name }}</span> --}}
+                {{-- <span class="nav-item nav-link">{{ auth()->user()->name }}</span> remover comentário--}}
                 <div>|</div>
                 <a class="nav-item nav-link" href="{{  route('login.logout') }}">Sair</a>
             </div>

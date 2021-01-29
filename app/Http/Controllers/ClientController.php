@@ -96,7 +96,7 @@ class ClientController extends Controller
      */
     public function edit(Client $client)
     {
-        // $client = Client::findOrFail($id); // buscar pelo ID           
+        // $client = Client::findOrFail($id); // buscar pelo ID
         $machines = Machine::all(); 
                                     //compact envia a viariável 'client' para view
         return view('clients.edit', compact('client', 'machines'));

@@ -14,7 +14,19 @@
                         Clientes Cadastrados
                     </div>
                     <div class="card-body">                        
-                        {{-- {{$count['clients']}} --}}
+                        <span class="h1">{{$counts['clients']}}</span>
+                        {{-- <table class="table">  
+                            <thead class="table-primary">
+                                <th class="align-middle"></th>              
+                            </thead>
+                            <tbody>           
+                                @foreach ($clients as $client)
+                                    <tr>
+                                        <td>{{$client->name}}</td>                                                               
+                                    </tr>
+                                @endforeach
+                            </tbody>            
+                        </table> --}}
                     </div>
                 </div>
             </div>
@@ -24,7 +36,7 @@
                         Usuários Cadastrados
                     </div>
                     <div class="card-body">
-                        {{-- {{$count['users']}} --}}
+                        <span class="h1">{{$counts['users']}}</span>
                     </div>
                 </div>
             </div>
@@ -37,7 +49,7 @@
                         Serviços Cadastrados
                     </div>
                     <div class="card-body">
-                        {{-- {{$count['services']}} --}}
+                        {{-- <span class="h1">{{$counts['services']}}</span> --}}
                     </div>
                 </div>
             </div>
@@ -47,7 +59,7 @@
                         Ordem de Serviços Cadastrados
                     </div>
                     <div class="card-body">
-                        {{-- {{$count['os']}} --}}
+                        {{-- <span class="h1">{$counts['os']}}</span> --}}
                     </div>
                 </div>
             </div>

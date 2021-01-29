@@ -15,6 +15,7 @@
                         <th class="align-middle">Telefone</th>
                         <th colspan="2" class="align-middle">Ações</th>
                         <th class="align-middle">Adicionar Computador</th>
+                        <th class="align-middle">Ordem de Serviço</th>
                     </thead>
                     <tbody>                        
                         @foreach ($clients as $client)
@@ -42,6 +43,12 @@
                                      href="{{ route('machines.create', $client->id) }}">
                                         +
                                     </a> 
+                                </td>
+                                <td>
+                                    <a class="btn bg-light text-secondary"
+                                     href="{{ route('os.create', $client->id)}}"> 
+                                        +
+                                    </a>
                                 </td>                                
                             </tr>                            
                         @endforeach

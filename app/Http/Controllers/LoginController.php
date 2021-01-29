@@ -28,6 +28,7 @@ class LoginController extends Controller
         if(Auth::attempt($credential)){
             return redirect()->route('dashboard.index');
         }
+        
 
         return redirect()->route('login.index')
             ->with('msg_error','Falha na autenticação');

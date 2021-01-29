@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\{client,machine,User};
+use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 class DashboardController extends Controller
 {
@@ -14,13 +15,19 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        // $counts = [
+        $counts = [
             
-        //     'clients'  => client::count(),
-        //     // 'users'    => User::count(),
+            'clients'  => Client::count(),
+            'users'    => User::count(),
+            
 
-        // ];
-        return view('dashboard');
+        ];
+        return view('dashboard', compact('counts'));
+        // $clients = Client::all();
+        // $machines = Machine::all(); 
+        // $users = User::all();   
+
+        // return view('dashboard', compact('clients', 'machines','users'));
     }
 
 }

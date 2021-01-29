@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\OsController;
+use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\UserController;
+use App\Os;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,11 +29,17 @@ use Illuminate\Support\Facades\Route;
 // //rota que apaga dados do banco
 // Route::delete('/clients/{id}', 'ClientController@destroy')->name('clients.destroy');
 
+// caso não funcione o login
 Route::resource('clients', 'ClientController');
 Route::resource('users', 'UserController');
 Route::resource('machines', 'MachineController');
+Route::resource('services', 'ServiceController');
+Route::resource('os', 'OsController');
+
 Route::get('dashboard', 'DashboardController@index')->name('dashboard.index');
 Route::get('logout', 'LoginController@logout')->name('login.logout');
+
+
 
 //rota de teste
 Route::get('/teste', function(){
@@ -38,8 +47,9 @@ Route::get('/teste', function(){
     return $machine->all();
 });
 
-// //subtitui todas as linhas acima
+// // Midleware não acessível se usuário estiver logado
 // Route::middleware('guest')->group(function(){
+
 //     Route::get('login', 'LoginController@index')->name('login.index');
     
 //     Route::post('login', 'LoginController@login')->name('login.login');
@@ -47,8 +57,9 @@ Route::get('/teste', function(){
 
 // Route::get('logout', 'LoginController@logout')->name('login.logout');
 
-// // com autenticação
+// // usuário com autenticação
 // Route::middleware('auth')->group(function(){
+
 //     Route::get('dashboard', 'DashboardController@index')->name('dashboard.index');
     
 //     Route::resource('users', 'UserController')->middleware('is-admin');
