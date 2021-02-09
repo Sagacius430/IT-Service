@@ -23,7 +23,8 @@
                                 <td>{{$client->name}}</td>
                                 <td>{{$client->fone}}</td>
                                 <td>
-                                    <a class="btn btn-warning" href="{{ route('clients.edit', $client->id) }}">
+                                    <a class="btn btn-warning" 
+                                        href="{{ route('clients.edit', $client->id) }}">
                                         Editar
                                     </a>
                                 </td>
@@ -40,13 +41,13 @@
                                 </td>
                                 <td>
                                      <a class="btn bg-light text-secondary" 
-                                     href="{{ route('machines.create', $client->id) }}">
+                                        href="{{ route('machines.create', $client->id) }}">
                                         +
                                     </a> 
                                 </td>
                                 <td>
                                     <a class="btn bg-light text-secondary"
-                                     href="{{ route('os.create', $client->id)}}"> 
+                                        href="{{ route('os.create', $client->id)}}"> 
                                         +
                                     </a>
                                 </td>                                
@@ -55,7 +56,10 @@
                     </tbody>                                    
                 </table>
                 <div>                    
-                    <a class="btn btn-success" href="{{ route('clients.create') }}">Novo cliente</a>                                   
+                    <a class="btn btn-success" 
+                        href="{{ route('clients.create') }}">
+                        Novo cliente
+                    </a>                                   
                 </div>
             </div>
         </div>

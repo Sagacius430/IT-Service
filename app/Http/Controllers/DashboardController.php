@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\{client,machine,User};
+use App\{client,machine, Service, User};
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 class DashboardController extends Controller
@@ -19,7 +19,8 @@ class DashboardController extends Controller
             
             'clients'  => Client::count(),
             'users'    => User::count(),
-            
+            'services' => Service::count(),
+            'machines' => Machine::count(),
 
         ];
         return view('dashboard', compact('counts'));

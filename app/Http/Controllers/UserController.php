@@ -42,6 +42,7 @@ class UserController extends Controller
      */
     public function store(UserRequest $request)
     {        
+        //cadastrar os dasdos que estão vinso a requisição
         User::create($request->all());
 
         // DB::beginTransaction();

@@ -10,9 +10,9 @@
     <div class="card-body">
         <form action="{{ route('clients.update', $client->id) }}" method="POST"> 
 
-            @csrf<!--tolken-->    
-
+            @csrf<!--tolken-->
             @method('PUT'){{-- converte POS em PUT para o Laravel --}}
+            
             <div class="row">
                 <div class="col-12 col-sm-3">
                     <div class="form-group">
@@ -101,63 +101,132 @@
         <h6>Edição de Computadores</h6>
     </div> 
 
-    <div calss="card-body">
-        @foreach ($client->machines as $key => $machine) 
-        <div class="col-12 bg-light">        
-            <div class="row mt-2">
-                <div class="col-12 col-sm-3">
-                    <div class="form-group">
-                        <label>Tipo de computador</label>
-                        <input type="hidden" name="machines[{{$key}}][id]" class="form-control"
-                            value="{{$machine->id}}">
-                        <select type="text" name="machines[{{$key}}][machine_type]" class="form-control">                        
-                            <option value="">{{ $machine->machine_type}}</option>
-                            <option value="">Notebook</option>
-                            <option value="">Desktop</option>
-                        </select>
-                    </div>
+    <form action="{{ route('machines.update', $client->id) }}" method="POST"> 
+        
+        @csrf<!--tolken-->
+        @method('PUT'){{-- converte POS em PUT para o Laravel --}}
+        
+
+        <div calss="card-body">
+            @foreach ($client->machines as $key => $machine) 
+                <div class="col-12 bg-light">        
+                    <div class="row mt-2">
+                        <div class="col-12 col-sm-3">
+                            <div class="form-group">
+                                <label>Tipo de computador</label>
+                                <input type="hidden" name="machines[{{$key}}][id]" class="form-control"
+                                    value="{{$machine->id}}">
+                                <select type="text" name="machines[{{$key}}][machine_type]" class="form-control">                        
+                                    <option value="">{{ $machine->machine_type}}</option>
+                                    <option value="{{ $machine->machine_type}}">Notebook</option>
+                                    <option value="{{ $machine->machine_type}}">Desktop</option>
+                                </select>
+                            </div>
+                        </div>    
+                        <div class="col 12 col-sm-2 ">
+                            <div class="form-group">
+                                <label>Marca</label>
+                                <input type="text" name="machines[{{$key}}][brand]" class="form-control"
+                                    value="{{ $machine->brand}}">
+                            </div>
+                        </div>
+                        <div class="col 12 col-sm-2">
+                            <div class="form-group">
+                                <label>Modelo</label>
+                                <input type="text" name="machines[{{$key}}][model]" class="form-control"
+                                    value="{{ $machine->model }}">
+                            </div>
+                        </div>
+                    </div>        
+                    <div class="row mt-2">                        
+                        <div class="col 12 col-sm-2">
+                            <div class="form-group">
+                                <label>Número do serial</label>
+                                <input type="text" name="machines[{{$key}}][serial_number]" class="form-control"
+                                    value="{{ $machine->serial_number }}">
+                            </div>
+                        </div>
+                        <div class="col 12 col-sm-2">
+                            <div class="form-group">
+                                <label>Descrição</label>
+                                <input type="text" name="machines[{{$key}}][description]" class="form-control"
+                                    value="{{ $machine->description }}">                
+                            </div>
+                        </div> 
+                        <div class="col 12 col-sm-2">
+                            <div class="form-group">
+                                <label>Avarias físicas</label>
+                                <input type="text" name="machines[{{$key}}][breakdowns]" class="form-control"
+                                    value="{{ $machine->breakdowns }}">                         
+                            </div>
+                        </div>
+                    </div> 
                 </div>    
-                <div class="col 12 col-sm-2 ">
-                    <div class="form-group">
-                        <label>Marca</label>
-                        <input type="text" name="machines[{{$key}}][brand]" class="form-control"
-                            value="{{ $machine->brand}}">
+            @endforeach
+
+            <div class="col-12 bg-light">     
+                <?php 
+                    $newMachinekey = count($client->machines);
+                ?>   
+                <div class="row mt-2">
+                    <div class="col-12 col-sm-3">
+                        <div class="form-group">
+                            <label>Tipo de computador</label>
+                            <input type="hidden" name="machines[{{$newMachinekey}}][id]" class="form-control"
+                                value="{{$machine->id}}">
+                            <select type="text" name="machines[{{$newMachinekey}}][machine_type]" class="form-control">                        
+                                <option value="">{{ old('machine.$newMachinekey.machine_type', '')}}</option>
+                                <option value="{{ old('machine.$newMachinekey.machine_type', '')}}">Notebook</option>{{--Verificar retorno null--}}
+                                <option value="{{ old('machine.$newMachinekey.machine_type', '')}}">Desktop</option>{{--Verificar--}}
+                            </select>
+                        </div>
+                    </div>    
+                    <div class="col 12 col-sm-2 ">
+                        <div class="form-group">
+                            <label>Marca</label>
+                            <input type="text" name="machines[{{$newMachinekey}}][brand]" class="form-control"
+                                value="{{ old('machine.$newMachinekey.brand', '')}}">
+                        </div>
                     </div>
-                </div>
-                <div class="col 12 col-sm-2">
-                    <div class="form-group">
-                        <label>Modelo</label>
-                        <input type="text" name="machines[{{$key}}][model]" class="form-control"
-                            value="{{ $machine->model }}">
+                    <div class="col 12 col-sm-2">
+                        <div class="form-group">
+                            <label>Modelo</label>
+                            <input type="text" name="machines[{{$newMachinekey}}][model]" class="form-control"
+                                value="{{ old('machine.$newMachinekey.model', '')}}">
+                        </div>
                     </div>
-                </div>
-            </div>        
-            <div class="row mt-2">                        
-                <div class="col 12 col-sm-2">
-                    <div class="form-group">
-                        <label>Número do serial</label>
-                        <input type="text" name="machines[{{$key}}][serial_number]" class="form-control"
-                            value="{{ $machine->serial_number }}">
+                </div>        
+                <div class="row mt-2">                        
+                    <div class="col 12 col-sm-2">
+                        <div class="form-group">
+                            <label>Número do serial</label>
+                            <input type="text" name="machines[{{$newMachinekey}}][serial_number]" class="form-control"
+                                value="{{ old('machine.$newMachinekey.serial_number', '')}}">
+                        </div>
                     </div>
-                </div>
-                <div class="col 12 col-sm-2">
-                    <div class="form-group">
-                        <label>Descrição</label>
-                        <input type="text" name="machines[{{$key}}][description]" class="form-control"
-                            value="{{ $machine->description }}">                
+                    <div class="col 12 col-sm-2">
+                        <div class="form-group">
+                            <label>Descrição</label>
+                            <input type="text" name="machines[{{$newMachinekey}}][description]" class="form-control"
+                                value="{{ old('machine.$newMachinekey.description', '')}}">                
+                        </div>
+                    </div> 
+                    <div class="col 12 col-sm-2">
+                        <div class="form-group">
+                            <label>Avarias físicas</label>
+                            <input type="text" name="machines[{{$newMachinekey}}][breakdowns]" class="form-control"
+                                value="{{ old('machine.$newMachinekey.breakdowns', '')}}">                         
+                        </div>
                     </div>
                 </div> 
-                <div class="col 12 col-sm-2">
-                    <div class="form-group">
-                        <label>Avarias físicas</label>
-                        <input type="text" name="machines[{{$key}}][breakdowns]" class="form-control"
-                            value="{{ $machine->breakdowns }}">                         
-                    </div>
-                </div>
             </div> 
-        </div>    
-        @endforeach          
-    </div>
+
+             <div class="col-12 bg-light">
+                <button type="submit" class="btn btn-success">Enviar</button>    
+            </div>   
+            <p></p>      
+        </div>        
+    </form>
 </div>
 <br>
 {{-- <div class="card">    

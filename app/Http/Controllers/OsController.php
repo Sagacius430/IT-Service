@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\{Client,Machine,User};
+use App\{Client,Machine, Service, User};
 use App\Os;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
@@ -31,9 +31,10 @@ class OsController extends Controller
     {
         $clients = Client::all();
         $machines = Machine::all();
-        $users = User::all();      
+        $users = User::all();  
+        $services = Service::all();    
 
-        return view('os.create', compact('clients','machines','users'));
+        return view('os.create', compact('clients','machines','users', 'services'));
     }
 
     /**
@@ -44,30 +45,37 @@ class OsController extends Controller
      */
     public function store(Request $request)
     {
+        
         //O store não está funcionando. Verificar
         DB::beginTransaction();
 
         try{
 
-            $client = Client::findOrFail($request->client['id']);
-            // $user = auth()->user()->id //pegar o usuário locado; 
-            $machines = Machine::all();
-            $return_date = Carbon::now()->addMonth(3)->format('Y-m-d');
+            $o = Os::create($request['os']);
+            
+            // // $o = Client::findOrFail($request->client['id']);
+            // $o->cliens()->where('id', $clients['id']);
+            
+            // $o = User::findOrFail($request->user['id']);
+            // // $user = auth()->user()->id //pegar o usuário locado; 
+            // $o = Machine::findOrFail($request->machine['id']);
+            
+            // // $return_date = Carbon::now()->addMonth(3)->format('Y-m-d');
             
 
-            return compact('$client', '$user', '$machines','$return_date');
+            // return compact('$client', '$user', '$machines','$return_date');
                     
 
-        //     DB::commit();
+            DB::commit();
 
         } catch(\Exception $exception){
             DB::rollback();
             return back()->with('msg_error'. 'Erro no servidor ao cadastrar Ordem de Serviço');
         }               
         
-        // return redirect()
-        //     ->route('clients.index')
-        //     ->with('msg_success','Cadastrado!');// qual url que será redirecionada a msg
+        return redirect()
+            ->route('os.index')
+            ->with('msg_success','Cadastrado!');// qual url que será redirecionada a msg
     }
 
     /**

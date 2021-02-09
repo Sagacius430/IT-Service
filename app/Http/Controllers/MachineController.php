@@ -1,12 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use App\client;
-use App\Http\Requests\ClientRequest;
-use App\Machine;
+use App\{Client,Machine};
+use App\Http\Requests\{ClientRequest, MachineRequest};
 use Illuminate\Http\Request;
-use App\Http\Requests\MachineRequest;
 use Facade\FlareClient\Http\Client as HttpClient;
 use GuzzleHttp\Client as GuzzleHttpClient;
 use Illuminate\Support\Facades\DB;
@@ -48,21 +45,22 @@ class MachineController extends Controller
      */
     public function store(Request $request)
     {    
-        //parei aqui
-        $url = $request->query();//teste
-        return $url;
+        
+        // $url = $request->query();//teste
+        // return $url;
+        return $request;
+        DB::beginTransaction();
 
-
-        // DB::beginTransaction();
-
-        // try{
-            // Machine::created(['client_id' => $request(Client::find(12))]);
-            Machine::create($request['machine']);
+        try{
+            
+            $machine = Machine::create($request['machine']);
+            $machine->clients()->where('id', $machine['client_id']);
+           
+            $client = Client::findOrFail($request->client['id']);
+            // $machine = Machine::created(['client_id' => $request(Client::find('id'))]);
+            
            
             // if('$machine')
-
-            return $request->all();
-
 
             // $machine->client()->create($request['client']);
 
@@ -70,14 +68,12 @@ class MachineController extends Controller
             //     $machine->machines()->create($machine);
             // }
 
-        //     DB::commit();
+            DB::commit();
 
-        // } catch{
-
-        //     DB::rolback();
-        //     return back()->with('msg_error', 'Erro no servidor ao cadastrar dispositivo.');
-
-        // }
+        } catch(\Exception $e){
+            DB::rolback();
+            return back()->with('msg_error', 'Erro no servidor ao cadastrar dispositivo.');
+        }
 
         // machine::create($request->all());        
 
@@ -104,9 +100,9 @@ class MachineController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Machine $machine)
     {
-        $machine = Machine::findOrFail($id);
+        // $machine = Machine::findOrFail($id);
        
         return view('client.edit', compact('machine'));
     }
@@ -118,15 +114,52 @@ class MachineController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Client $client)
     {
-        $machine = Machine::findOrFail($id);
+       
+        return $request;
+        DB::beginTransaction();
+        try{
+            // //parei aqui pois não está editando os computadores
+            // $machine = Machine::findOrFail($id);
+            // //atualizando o Machine
+            // $machine->update($request->all());
 
-        $machine->update($request->all());
-        $machine->save();
+            // $machine->save();
+            //loop nos computadores que vieram do formulário
+            foreach ($request->machines as $machine){
+                //se o computador possuir um id, o computador já existe
+                if ($machine['id']){
+                    // buscando computador do cliente com base no id
+                    $clientMachine = $client->machines()->where('id', $machine['id']);
+                    // se o delete estiver marcado, deleta
+                    if(isset($machine['delete'])){
+                        $clientMachine->delete();
+                    // se não, cria computador
+                    }else{
+                        $clientMachine->update([
+                            'id'=>$machine['id']
+                        ]);
+                    }
+                    
+                }else{
+                    // se o valor do computador estiver vazio, cria o computador
+                    if($machine['id'] !== null){
+                        $client->machine()->create($machine);
+                    }
+                }
+            }
+            DB::commit();
 
+        } Catch(\Exception $exception){
+
+            DB::rollback();
+            return back()
+                ->with('msg_error','Erro no servidor ao atualizar cliente');
+            
+        }
         return redirect()
-            ->route('client.index')
+            ->route('clients.index')
             ->with('msg_success', 'Atualizado!');
 
     }

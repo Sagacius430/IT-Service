@@ -40,7 +40,7 @@
 
                 <div class="col 12 col-sm-2 ">
                     <div class="form-group">
-                        <label>type</label>
+                        <label>Tipo</label>
                         <input type="text" name="type" class="form-control" 
                             value="{{old('type', '')}}">
                     </div>
@@ -52,4 +52,25 @@
         </form>
     </div>    
 </div>
+<p></p>
+    <div class="card-header">
+        <div class="col 12">
+            <table class="table">  
+                <thead class="table-primary">
+                    <th class="align-middle">nome</th>
+                    <th class="align-middle">Descrição</th>
+                    <th class="align-midle">Valor</th>                
+                </thead>
+                <tbody>           
+                    @foreach ($services as $service)
+                        <tr>
+                            <td>{{$service->name}}</td>
+                            <td>{{$service->description}}</td>
+                            <td>{{$service->value}}</td>                        
+                        </tr>
+                    @endforeach
+                </tbody>            
+            </table>
+        </div>
+    </div>
 @endsection

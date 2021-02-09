@@ -5,7 +5,7 @@
 <div class="card">    
     
     <div class="card-header">
-        <label>Cadastro de computadores</label>
+        <label>Cadastro de computadores {{$machines}}</label>
     </div>
 
     <div class="card-body">
@@ -13,14 +13,18 @@
             
             @csrf<!--tolken-->
             
+            <?php 
+                $newMachinekey = count($client->machines);
+            ?>   
+        
             <div class="row">
-                <div class="col 12 col-sm-3 ">
+                <div class="col 12 col-sm-2 ">
                     <div class="form-group">
                         <label>Tipo de computador</label>
-                        <select name="machines[machine_type]" size=1 class="form-control">
+                        <select type="text" name="machines[{{$newMachinekey}}][machine_type]" size=1 class="form-control">
                             <option> </option>
-                            <option value="{{ old('machine.machine_type', 'Notebook')}}">Notebook</option>
-                            <option value="{{ old('machine.machine_type', 'Desktop')}}">Desktop</option>
+                            <option value="{{ old('machine.$newMachinekey.machine_type', 'Notebook')}}">Notebook</option>
+                            <option value="{{ old('machine.$newMachinekey.machine_type', 'Desktop')}}">Desktop</option>
                         </select>
                     </div>
                 </div>
@@ -28,7 +32,7 @@
                 <div class="col 12 col-sm-2">
                     <div class="form-group">
                         <label>Marca</label>
-                        <input type="text" name="machines[brand]" class="form-control"
+                        <input type="text" name="machines[][brand]" class="form-control"
                             value="{{ old('machine.brand', '') }}">
                     </div>
                 </div>
@@ -38,14 +42,14 @@
                 <div class="col 12 col-sm-2">
                     <div class="form-group">
                         <label>Modelo</label>
-                        <input type="text" name="machines[model]" class="form-control"
+                        <input type="text" name="machines[][model]" class="form-control"
                             value="{{ old('machine.model', '') }}">
                     </div>
                 </div>
                 <div class="col 12 col-sm-2">
                     <div class="form-group">
                         <label>Número do serial</label>
-                        <input type="text" name="machines[serial_number]" class="form-control"
+                        <input type="text" name="machines[][serial_number]" class="form-control"
                             value="{{ old('machine.serial_number', '') }}">
                     </div>
                 </div>
@@ -55,21 +59,21 @@
                 <div class="col 12 col-sm-2">
                     <div class="form-group">
                         <label>Descrição</label>
-                        <input type="text" name="machines[description]" class="form-control"
+                        <input type="text" name="machines[][description]" class="form-control"
                             value="{{ old('machine.description', '') }}">                
                     </div>
                 </div> 
                 <div class="col 12 col-sm-2">
                     <div class="form-group">
                         <label>Avarias físicas</label>
-                        <input type="text" name="machines[breakdowns]" class="form-control"
+                        <input type="text" name="machines[][breakdowns]" class="form-control"
                             value="{{ old('machine.breakdowns', '') }}">                      
                     </div>
                 </div>
                 <div class="col 12 col-sm-2">
                     <div class="form-group">
                         <label></label>
-                        {{-- <input type="text" name="machines[id]" class="form-control"
+                        {{-- <input type="text" name="machines[][id]" class="form-control"
                             value="{{ old('client.id', Request::query())}}"> --}}
                     </div>
                 </div>
@@ -77,14 +81,15 @@
             </div>  
             <br>      
             <div> 
-                    <button type="submit" class="btn btn-success">Novo computador</button>
-            </div>           
-            
+                    <button type="submit" class="btn btn-success">
+                        Novo computador
+                    </button>
+            </div> 
         </form>
     </div>
 </div>
 <br>
-<div class="card">
+<div class="card-header">
     <div class="col 12">
         <table class="table">  
             <thead class="table-primary">

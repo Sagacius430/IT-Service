@@ -30,14 +30,14 @@ use Illuminate\Support\Facades\Route;
 // Route::delete('/clients/{id}', 'ClientController@destroy')->name('clients.destroy');
 
 // caso não funcione o login
-Route::resource('clients', 'ClientController');
-Route::resource('users', 'UserController');
-Route::resource('machines', 'MachineController');
-Route::resource('services', 'ServiceController');
-Route::resource('os', 'OsController');
+// Route::resource('clients', 'ClientController');
+// Route::resource('users', 'UserController');
+// Route::resource('machines', 'MachineController');
+// Route::resource('services', 'ServiceController');
+// Route::resource('os', 'OsController');
 
-Route::get('dashboard', 'DashboardController@index')->name('dashboard.index');
-Route::get('logout', 'LoginController@logout')->name('login.logout');
+// Route::get('dashboard', 'DashboardController@index')->name('dashboard.index');
+// Route::get('logout', 'LoginController@logout')->name('login.logout');
 
 
 
@@ -47,24 +47,28 @@ Route::get('/teste', function(){
     return $machine->all();
 });
 
-// // Midleware não acessível se usuário estiver logado
-// Route::middleware('guest')->group(function(){
+// Midleware não acessível se usuário estiver logado
+Route::middleware('guest')->group(function(){
 
-//     Route::get('login', 'LoginController@index')->name('login.index');
+    Route::get('login', 'LoginController@index')->name('login.index');
     
-//     Route::post('login', 'LoginController@login')->name('login.login');
-// });
+    Route::post('login', 'LoginController@login')->name('login.login');
+});
 
-// Route::get('logout', 'LoginController@logout')->name('login.logout');
+Route::get('logout', 'LoginController@logout')->name('login.logout');
 
-// // usuário com autenticação
-// Route::middleware('auth')->group(function(){
+// usuário com autenticação
+Route::middleware('auth')->group(function(){
 
-//     Route::get('dashboard', 'DashboardController@index')->name('dashboard.index');
+    Route::get('dashboard', 'DashboardController@index')->name('dashboard.index');
     
-//     Route::resource('users', 'UserController')->middleware('is-admin');
+    Route::resource('users', 'UserController')->middleware('is-admin');
 
-//     Route::resource('clients', 'ClientController');
+    Route::resource('clients', 'ClientController');
     
-//     Route::resource('machines', 'MachineController');  
-// });
+    Route::resource('machines', 'MachineController');  
+
+    Route::resource('services', 'ServiceController')->middleware('is-admin');
+
+    Route::resource('os', 'OsController');
+});

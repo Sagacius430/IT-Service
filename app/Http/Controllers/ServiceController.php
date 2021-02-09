@@ -4,82 +4,81 @@ namespace App\Http\Controllers;
 
 use App\Service;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ServiceController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
     public function index()
     {
-        
+        $services = Service::all();
+
+        return view('services.index', compact('services'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        return view('sevices.create');
+        $services = service::all();
+        return view('services.create', compact('services'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
-    }
+        DB::beginTransaction();
+        try{
+        Service::create($request->all());   
+        
+        DB::commit();
+        } catch(\Exception $exception){
+            DB::rollBack();
+            return back()->with('msg_error'. 'Erro no servidor ao cadastrar serviço');
+        }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Service  $service
-     * @return \Illuminate\Http\Response
-     */
+        return redirect()
+            ->route('services.index')
+            ->with('msg_success','Cadastrado!');
+    }
+    
     public function show(Service $service)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Service  $service
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Service $service)
     {
-        //
+        $services = Service::all();
+        return view('services.edit', compact('service'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Service  $service
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, Service $service)
     {
-        //
+        DB::beginTransaction();
+        
+        try{
+
+            $service->update($request['service']);
+            DB::commit();
+
+        } catch(\Exception $exception){
+
+            DB::rollBack();
+            return back()->with('msg_error'. 'Erro no servidor ao cadastrar serviço');
+        
+        }
+
+        return redirect()
+            ->route('services.index')
+            ->with('msg_success', 'Atualizado!');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Service  $service
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Service $service)
+    public function destroy($id)
     {
-        //
+        $service = Service::findOrFail($id);
+
+        $service->delete();
+
+        return redirect()
+            ->route('services.index');
+
     }
 }

@@ -18,15 +18,15 @@
                 <div class="navbar-nav">
                     <a class="nav-item nav-link" href="{{ route('dashboard.index') }}">Painel</a>
                     <a class="nav-item nav-link" href="{{ route('clients.index') }}">Clientes</a>
-                    {{-- @if (auth()->user()->role == 'admin') remover comentário--}} 
+                    <a class="nav-item nav-link" href="{{ route('os.index') }}">Os</a>
+                    @if (auth()->user()->role == 'admin') {{--Autenticação--}}
                         <a class="nav-item nav-link" href="{{ route('users.index') }}">Usuários</a>   
-                        <a class="nav-item nav-link" href="{{ route('services.index') }}">Serviços</a>
-                        <a class="nav-item nav-link" href="{{ route('os.index') }}">Os</a>      
-                    {{-- @endif --}}
+                        <a class="nav-item nav-link" href="{{ route('services.index') }}">Serviços</a>                              
+                    @endif{{----}}
                 </div>
             </div>
             <div class="d-flex align-items-center">
-                {{-- <span class="nav-item nav-link">{{ auth()->user()->name }}</span> remover comentário--}}
+                <span class="nav-item nav-link">{{ auth()->user()->name }}</span>{{--Autenticação--}}
                 <div>|</div>
                 <a class="nav-item nav-link" href="{{  route('login.logout') }}">Sair</a>
             </div>
@@ -65,5 +65,6 @@
                       
     <script src="{{asset('js/jquery-3.5.1.min.js')}}"></script>
     <script src="{{asset('js/bootstrap.bundle.min.js')}}"></script>
+    <script src="{{asset('js/check.js')}}"></script>
 </body>
 </html>

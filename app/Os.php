@@ -13,7 +13,10 @@ class Os extends Model
         'diagnosis',
         'status',
         'contacted',
+        'guarantee',
+        'finish',
         'user_id',
+        'client_id',
         'machines_id',
     ];
 
@@ -23,5 +26,9 @@ class Os extends Model
 
     public function machines(){
         return $this->belongsTo('App\Machine');
+    }
+
+    public function clients(){
+        return $this->belongsTo('App\Client');
     }
 }

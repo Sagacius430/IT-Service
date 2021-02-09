@@ -40,8 +40,8 @@
                     </div>
                 </div>
             </div>
-
         </div>
+        <p></p>
         <div class="row at-3">
             <div class="col-12 col-sm-6">
                 <div class="card">
@@ -49,7 +49,7 @@
                         Serviços Cadastrados
                     </div>
                     <div class="card-body">
-                        {{-- <span class="h1">{{$counts['services']}}</span> --}}
+                        <span class="h1">{{$counts['services']}}</span>
                     </div>
                 </div>
             </div>
@@ -64,6 +64,31 @@
                 </div>
             </div>
         </div>
+        <p></p>
+        <div class="row at-3">
+            <div class="col-12 col-sm-6">
+                <div class="card">
+                    <div class="card-header">
+                        Computadores Cadastrados
+                    </div>
+                    <div class="card-body">
+                        <span class="h1">{{$counts['machines']}}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-sm-6">
+                <div class="card">
+                    <div class="card-header">
+                        Pendências
+                    </div>
+                    <div class="card-body">
+                        <span class="p">Corrigir edição de computadores</span>
+                        <br>                        
+                    </div>
+                </div>
+            </div>
+        </div>        
     </div>
     </div>
 </div>

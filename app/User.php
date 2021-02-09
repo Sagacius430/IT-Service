@@ -30,19 +30,30 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    //mascaras de exibição
+    // public function getFoneAttribute(){
+    //     $fone = $this->attributes['fone'];
+
+    //     return '('. substr($fone, 0, 2).') '. 
+    //         substr($fone, 2, 2).' '. 
+    //         substr($fone, 3, 4).'-'.
+    //         substr($fone, 6, 4);
+    // }
+
     //Mutator
     public function setPasswordAttribute($value){
+
         $this->attributes['password'] = Hash::make($value);
     }
 
-    //Acessor
+    //accessor (manipulação no momento do retorno do atributo em questão)
     public function getNameAttribute($value){
         $nameLowercase = strtolower($value);
         $nameUppercaseFirst = ucfirst($nameLowercase);
 
         return $nameUppercaseFirst;
     }
-
+    //accessor (manipulação no momento do retorno do atributo em questão)
     public function getSecond_nameAttribute($value){
         $nameLowercase = strtolower($value);
         $nameUppercaseFirst = ucfirst($nameLowercase);

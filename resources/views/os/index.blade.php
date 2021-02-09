@@ -47,9 +47,9 @@
                         @endforeach
                     </tbody>                                    
                 </table>
-                {{-- <div>                    
+                <div>                    
                     <a class="btn btn-success" href="{{ route('os.create') }}">Novo serviço</a>                                   
-                </div> --}}
+                </div>
             </div>
         </div>
     </div>

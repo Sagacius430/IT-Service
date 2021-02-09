@@ -15,6 +15,7 @@
                         <th class="align-middle">Tipo</th>
                         <th class="align-middle">Descrição</th>
                         <th class="align-middle">Valor</th>
+                        <th class="align-middle" colspan="2">Ações</th>
                     </thead>
                     <tbody>                        
                         @foreach ($services as $service)
@@ -24,7 +25,8 @@
                                 <td>{{$service->description}}</td>
                                 <td>{{$service->value}}</td>
                                 <td>
-                                    <a class="btn btn-warning" href="{{ route('services.edit', $service->id) }}">
+                                    <a class="btn btn-warning" 
+                                        href="{{ route('services.edit', $service->id) }}">
                                         Editar
                                     </a>
                                 </td>
@@ -44,7 +46,10 @@
                     </tbody>                                    
                 </table>
                 <div>                    
-                    <a class="btn btn-success" href="{{ route('vervices.create') }}">Novo serviço</a>                                   
+                    <a class="btn btn-success" 
+                        href="{{ route('services.create') }}">
+                        Novo serviço
+                    </a>
                 </div>
             </div>
         </div>

@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Machine;
+use App\{Machine, CLient};
 use App\Http\Requests\ClientRequest;
 use Illuminate\Http\Request;
-use App\Client;
 use Illuminate\Support\Facades\DB;
+use PhpParser\Node\Stmt\Return_;
+
+use function GuzzleHttp\Promise\all;
 
 class ClientController extends Controller
 {
@@ -17,8 +19,8 @@ class ClientController extends Controller
      */
     public function index()
     {
-        $clients =  Client::all();   
-
+        $clients =  Client::all();
+        
         return view('clients.index', compact('clients'));  
         //return view('client');
     }
@@ -47,24 +49,27 @@ class ClientController extends Controller
 
         // $clientId['id'] = $client->id;
         // Machine::create($clientId);
-
+        
         DB::beginTransaction();
 
         try{
             // Client é o model            
             $client = Client::create($request['client']);
-           
+            
             //copiando o id do cliente no endereço
             $client->address()->create($request['address']); 
-
+            
             // $machine = Machine::create($request['machine']);
             // $client = $machine;
             // //parei aqui
             // return $request;
-            Foreach($request->machines as $machine){
-                $client->Machines()->create($machine);
+            foreach ($request->machines as $machine){  
+                // machine() para muitos em Model Client
+                // machine para um em Model Client
+                $client->machines()->create($machine);                
             }
-
+            
+            return ;
             DB::commit();
 
         } catch(\Exception $exception){
@@ -94,12 +99,15 @@ class ClientController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Client $client)
+    public function edit(Client $client, Machine $machine)
     {
         // $client = Client::findOrFail($id); // buscar pelo ID
-        $machines = Machine::all(); 
-                                    //compact envia a viariável 'client' para view
-        return view('clients.edit', compact('client', 'machines'));
+        // $machines = Machine::all(); 
+        // foreach($machines as $machine){
+            // $machines = $client->machine()->where('id', $machine['id']);
+        // }
+                                    //compact envia a variável 'client' para view
+        return view('clients.edit', compact('client', 'machine'));
     }
 
     /**
@@ -110,7 +118,7 @@ class ClientController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Client $client)
-    {               
+    {                     
         DB::beginTransaction();
         try{ 
             //atualizando o CLiente
@@ -120,10 +128,10 @@ class ClientController extends Controller
             $client->address()->update($request['address']);
 
             // $client->machines()->update($request['machine']);
-            return $request;
+
             DB::commit();
 
-        } Catch(\Exception $exception){
+        } catch(\Exception $exception){
 
             DB::rollback();
             return back()

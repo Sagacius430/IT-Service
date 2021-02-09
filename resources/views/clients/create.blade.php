@@ -142,14 +142,14 @@
                                 value="{{ old('machine.0.breakdowns', '') }}">                         
                     </div>
                 </div>
-                <div style="display:nome">
+                {{-- <div style="display:nome">
                     <div class="form-group">
                         <label>Id do cliente</label>
                             {{-- <input type="text" name="machines[0][client_id]" class="form-control"
                                 value="{{ old('machine.0.client_id', asset('/clients/create/'.$client_id->id)) }}">   --}}
                                                        {{--colocar id que vem da URL  --}}
-                    </div>
-                </div>
+                    {{-- </div>
+                </div> --}}
             </div> 
                
             <div class="row" id="addMachine" style="display:none">                
@@ -214,7 +214,7 @@
     </div>
 </div>
 @endsection
-<script>
+<script>//script para adicionar mais divs para cadastro de computadores
     function add_div(addMachine){
         var display = document.getElementById(addMachine).style.display;
         // if (display == "none")
