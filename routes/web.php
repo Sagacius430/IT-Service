@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ClientController;
 use App\Http\Controllers\OsController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\UserController;
@@ -62,13 +63,27 @@ Route::middleware('auth')->group(function(){
 
     Route::get('dashboard', 'DashboardController@index')->name('dashboard.index');
     
+    Route::get('reports/clients', 'ReportController@generateClientsReport')->name('reports.clients');
+    Route::get('reports/os', 'ReportController@generateOsReport')->name('reports.os');
+    
     Route::resource('users', 'UserController')->middleware('is-admin');
 
     Route::resource('clients', 'ClientController');
-    
+    Route::post('client/import', 'ClientController@import')->name('client.import');
+    // Route::get('client/export', 'ClientController@export')->name('client.export');
+    Route::post('client/export', 'ClientController@export')->name('client.export');
+
     Route::resource('machines', 'MachineController');  
 
     Route::resource('services', 'ServiceController')->middleware('is-admin');
 
-    Route::resource('os', 'OsController');
+
+    Route::get('os', 'OsController@index')->name('os.index');
+    Route::get('/os/create/{client_id}', 'OsController@create')->name('os.create');
+    Route::get('/os/{client_id}/edit', 'OsController@edit')->name('os.edit');
+    Route::post('/os', 'OsController@store')->name('os.store');
+    Route::put('/os/{id}', 'OsController@update')->name('os.update');
+    Route::delete('/os/{id}', 'osController@destroy')->name('os.destroy');   
+    
+    // Route::resource('os','osController');
 });

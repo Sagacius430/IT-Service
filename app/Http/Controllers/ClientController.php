@@ -4,10 +4,14 @@ namespace App\Http\Controllers;
 
 use App\{Machine, CLient};
 use App\Http\Requests\ClientRequest;
+use Facade\FlareClient\Http\Client as HttpClient;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use PhpParser\Node\Stmt\Return_;
-
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\ClientImport;
+use App\Exports\ClientExport;
+use Carbon\Carbon;
 use function GuzzleHttp\Promise\all;
 
 class ClientController extends Controller
@@ -49,7 +53,7 @@ class ClientController extends Controller
 
         // $clientId['id'] = $client->id;
         // Machine::create($clientId);
-        
+            
         DB::beginTransaction();
 
         try{
@@ -57,19 +61,13 @@ class ClientController extends Controller
             $client = Client::create($request['client']);
             
             //copiando o id do cliente no endereço
-            $client->address()->create($request['address']); 
+            $client->address()->create($request['address']);             
             
-            // $machine = Machine::create($request['machine']);
-            // $client = $machine;
-            // //parei aqui
-            // return $request;
             foreach ($request->machines as $machine){  
-                // machine() para muitos em Model Client
-                // machine para um em Model Client
+                //**Esta cadastrando somente se for dois computadores.
+                //**verificar permissão para cadastrar um tbm
                 $client->machines()->create($machine);                
             }
-            
-            return ;
             DB::commit();
 
         } catch(\Exception $exception){
@@ -100,7 +98,7 @@ class ClientController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit(Client $client, Machine $machine)
-    {
+    {        
         // $client = Client::findOrFail($id); // buscar pelo ID
         // $machines = Machine::all(); 
         // foreach($machines as $machine){
@@ -168,5 +166,46 @@ class ClientController extends Controller
 
         return redirect()
             ->route('clients.index');
+    }
+
+    public function import(Request $request){
+
+        $file = $request->file->get('file');
+        
+        try{
+
+        Excel::import(new ClientImport, $file);
+        
+        } catch(\Exception $exception){
+
+            return back()->with('msg_error', 'Erro ao importar');
+
+        }
+
+        return back()->with('msg_success', 'Importação realizada');
+    }
+
+    // public function export(){
+
+    //     return Excel::download(new ClientExport, 'Clients.csv');
+
+    // }
+
+    public function export(Request $request){
+
+        $dateStart = Carbon::parse($request->date_start)->startOfDay();
+        $dateEnd = Carbon::parse($request->date_end)->endOfDay();
+        $exportFileType = $request->export_file_type;
+        
+        // if($dateStart == ''){
+        //     $dateStart = Carbon::createFromFormat('Y-m-d', '1982-06-09');
+        // }       
+        // if($dateEnd == ''){
+        //     $dateEnd = Carbon::now();
+        // }
+        // return $dateStart;
+
+        return Excel::download( new clientExport($dateStart, $dateEnd), 'Clients' . $exportFileType);
+
     }
 }

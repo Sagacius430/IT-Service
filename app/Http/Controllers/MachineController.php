@@ -17,7 +17,7 @@ class MachineController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request, $id)
-    {        
+    {   
         $nome = Client::get('nome');
         $id   = $id;
         $machines = Machine::find(1);
@@ -32,7 +32,8 @@ class MachineController extends Controller
      */
     public function create(Client $client)
     {
-        $machines = Machine::all();        
+
+        $machines = Machine::all();     
 
         return view('machines.create', compact('machines', 'client'));
     }    
@@ -44,29 +45,12 @@ class MachineController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {    
-        
-        // $url = $request->query();//teste
-        // return $url;
-        return $request;
+    {           
         DB::beginTransaction();
 
         try{
             
             $machine = Machine::create($request['machine']);
-            $machine->clients()->where('id', $machine['client_id']);
-           
-            $client = Client::findOrFail($request->client['id']);
-            // $machine = Machine::created(['client_id' => $request(Client::find('id'))]);
-            
-           
-            // if('$machine')
-
-            // $machine->client()->create($request['client']);
-
-            // foreach($request->machines as $machine){
-            //     $machine->machines()->create($machine);
-            // }
 
             DB::commit();
 
@@ -89,9 +73,12 @@ class MachineController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show()
     {
-        // return view('clients.edit', ['machine' => Machine::findOrFail($id)]);
+        $clients = Client::all(); 
+        $machines = Machine::all();
+
+        return view('machine.index', compact('clients', 'machines'));  
     }
 
     /**
@@ -116,16 +103,10 @@ class MachineController extends Controller
      */
     public function update(Request $request, Client $client)
     {
-       
-        return $request;
+        
         DB::beginTransaction();
         try{
-            // //parei aqui pois não está editando os computadores
-            // $machine = Machine::findOrFail($id);
-            // //atualizando o Machine
-            // $machine->update($request->all());
-
-            // $machine->save();
+            
             //loop nos computadores que vieram do formulário
             foreach ($request->machines as $machine){
                 //se o computador possuir um id, o computador já existe

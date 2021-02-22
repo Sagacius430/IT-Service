@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\{client,machine, Service, User};
+use App\{client,machine, Service, User, OS};
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 class DashboardController extends Controller
@@ -21,14 +21,14 @@ class DashboardController extends Controller
             'users'    => User::count(),
             'services' => Service::count(),
             'machines' => Machine::count(),
+            'os'       => Os::count(),
 
         ];
-        return view('dashboard', compact('counts'));
-        // $clients = Client::all();
-        // $machines = Machine::all(); 
-        // $users = User::all();   
 
-        // return view('dashboard', compact('clients', 'machines','users'));
+        
+        
+        
+        return view('dashboard', compact('counts'));        
     }
 
 }

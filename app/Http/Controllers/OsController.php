@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\{Client,Machine, Service, User};
-use App\Os;
+use App\{Os, Client, Machine, Service, User};
 use Illuminate\Http\Request;
+use App\Http\Requests\OsRequest;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
@@ -17,9 +17,32 @@ class OsController extends Controller
      */
     public function index()
     {
-        $os =  Os::all();   
+        $orders =  Os::all(); 
+        $clients = Client::all(); 
+        $users = User::all();
 
-        return view('os.index', compact('os'));  
+        $counts = [
+            
+            'clients'  => Client::count(),
+            'users'    => User::count(),
+            'services' => Service::count(),
+            'machines' => Machine::count(),
+            'os'       => Os::count(),
+
+        ];
+        //Select ordem de serviço pra enviar a index
+        $status = [
+            'em_manutenção'   => Os::where('status', 'Em manutenção')->count(),
+            'aguardando_peça' => Os::where('status', 'Aguardando peça')->count(),
+            'devolvido'       => Os::where('status', 'Devolvido')->count(),
+            'finalizado'      => Os::where('status', 'Finalizado')->count(),
+        ];
+
+        $collection = collect(['','']);
+
+        $counted = Machine::where('brand', '!=', null)->count();  
+
+        return view('os.index', compact('orders','clients', 'users','counts','status','counted'));  
     }
 
     /**
@@ -27,14 +50,15 @@ class OsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Client $client)
+    public function create($client_id)
     {
-        $clients = Client::all();
-        $machines = Machine::all();
-        $users = User::all();  
+        $client = Client::find($client_id);
+        // dd($client);        
+        $machines = Machine::where('client_id', $client_id)->get();
+        $user = User::all();  
         $services = Service::all();    
 
-        return view('os.create', compact('clients','machines','users', 'services'));
+        return view('os.create', compact('client','machines','user', 'services'));
     }
 
     /**
@@ -44,31 +68,36 @@ class OsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        
+    {              
+        $orderService = Os::create($request['os']);
+            return $orderService;
+        // return $request->input();
         //O store não está funcionando. Verificar
         DB::beginTransaction();
 
         try{
-
-            $o = Os::create($request['os']);
             
-            // // $o = Client::findOrFail($request->client['id']);
-            // $o->cliens()->where('id', $clients['id']);
             
-            // $o = User::findOrFail($request->user['id']);
-            // // $user = auth()->user()->id //pegar o usuário locado; 
-            // $o = Machine::findOrFail($request->machine['id']);
+            // $input = $request->only(['client_id', 'user_id']);
+            $client = Client::findOrFail($request->client['id']);
+            $orderService = OS:: create([                
+                'user_id'       => auth()->user()->id,
+                'client_id'     => $client->id,
+                'machine_id'    => $request->machine_id,
+                'status'        => $request->status,
+                'service'       => $request->service,
+            ]);
+            // $orderService -> machine_id = $request->machine_id;
+            // $orderService -> status = $request->status;
+            // $orderService -> service = $request->service;
+            foreach ($request->services as $service){
+                $orderService->services()->attach($service['id']);
+            }
+            return $orderService->services;
             
-            // // $return_date = Carbon::now()->addMonth(3)->format('Y-m-d');
-            
-
-            // return compact('$client', '$user', '$machines','$return_date');
-                    
-
             DB::commit();
 
-        } catch(\Exception $exception){
+        } catch(\Exception $e){
             DB::rollback();
             return back()->with('msg_error'. 'Erro no servidor ao cadastrar Ordem de Serviço');
         }               
@@ -95,9 +124,12 @@ class OsController extends Controller
      * @param  \App\Os  $os
      * @return \Illuminate\Http\Response
      */
-    public function edit(Os $os)
+    public function edit(Os $id)
     {
-        //
+        
+        $order = Os::findOrFail($id);
+        
+        return view('os.edit', compact('order'));
     }
 
     /**
@@ -109,7 +141,10 @@ class OsController extends Controller
      */
     public function update(Request $request, Os $os)
     {
-        //
+        $os->update($request['os']);
+        return redirect()
+            ->route('os.index')
+            ->with('msg_success', 'Orden de serviço atualizada');
     }
 
     /**

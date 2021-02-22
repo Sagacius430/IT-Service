@@ -9,6 +9,7 @@ use PhpParser\Node\Expr\FuncCall;
 class Os extends Model
 {
     protected $fillable = [
+        //**falta procedimentos e service_id
         'service',
         'diagnosis',
         'status',
@@ -21,14 +22,18 @@ class Os extends Model
     ];
 
     public function users(){
-        return $this->belongsTo('App\User');
+        return $this->belongsTo('App\User', 'id', 'user_id');
     }
 
     public function machines(){
-        return $this->belongsTo('App\Machine');
+        return $this->belongsTo('App\Machine', 'id', 'machine_id');
     }
 
     public function clients(){
-        return $this->belongsTo('App\Client');
+        return $this->belongsTo('App\Client', 'id', 'client_id');
+    }
+
+    public function services(){
+        return $this->belongsTo('App\Service', 'id', 'service_id');
     }
 }
