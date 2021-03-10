@@ -16,15 +16,13 @@ class Client extends Model
         'fone',
     ];
 
-    //mascaras de exibição
-    // public function getFoneAttribute(){
-    //     $fone = $this->attributes['fone'];
+    public function getNameAttribute($value){
 
-    //     return  substr($fone, 0, 2).
-    //         substr($fone, 2, 2).' '.
-    //         substr($fone, 3, 4).'-'.
-    //         substr($fone, 6, 4);
-    // }
+        $nameLowercase = strtolower($value);
+        $nameUppercaseFirst = ucfirst($nameLowercase);
+
+        return $nameUppercaseFirst;
+    }
 
     public function address(){
 
@@ -48,4 +46,8 @@ class Client extends Model
         return $this->hasMany('App\Client');
     }
     
+    public function os(){ 
+        
+        return $this->hasMany('App\Os');
+    }
 }

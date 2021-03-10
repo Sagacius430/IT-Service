@@ -14,6 +14,7 @@
 
 <div class="col-12">
     <form action="{{route('os.store')}}" method="POST">
+
         <div class="card"> 
             
             <div class="card-header">
@@ -28,7 +29,7 @@
                         <div class="col 12 col-sm-2 ">
                             <div class="form-group">
                                 <label>Resposável:</label>
-                                <input type="text" name="user_name" class="form-control" id="name" disabled="disabled"
+                                <input type="text" name="os[user_id]" class="form-control" id="name" disabled="disabled"
                                     value="{{ auth()->user()->name }}">
                                 <input type="hidden" name="user_id"
                                     value="{{auth()->user()->id }}">            
@@ -41,7 +42,7 @@
                         <div class="col 12 col-sm-2 ">
                             <div class="form-group">
                                 <label>Cliente:</label>
-                                    <input type="text" name="client_name" class="form-control" id="id" disabled="disabled" 
+                                    <input type="text" name="os[client_id]" class="form-control" id="id" disabled="disabled" 
                                         value="{{$client->name }}">
                                     <input type="hidden" name="client_id"
                                         value="{{$client->id}}">
@@ -54,7 +55,7 @@
                                 <select type="text" name="os[machine_id]" size=1 class="form-control">
                                     <option> </option>
                                     @foreach ($machines as $machine)
-                                        <option value="{{$machine->id}}">
+                                        <option {{--{{old('os[machine_id]','') == $machine->id ? 'selected':''}}--}} value="{{$machine->id}}">
                                             {{$machine->brand}} {{$machine->serial_number}}
                                         </option>                                   
                                     @endforeach
@@ -70,10 +71,11 @@
                                 <label>Status</label>                                                   
                                     <select type="text" name="os[status]" size=1 class="form-control">
                                         <option> </option>
-                                        <option value="{{ old('os.status', 'Em manutenção')}}">Em manutenção</option>
-                                        <option value="{{ old('os.status', 'Aguardando peça')}}">Aguardando peça</option>
-                                        <option value="{{ old('os.status', 'Devolvido')}}">Devolvido</option>
-                                        <option value="{{ old('os.status', 'Finalizado')}}">Finalizado</option>
+                                        <option value="{{old('os[status]', 'Aguardando serviço')}}">Aguardando serviço</option>
+                                        <option value="{{old('os[status]', 'Em manutenção')}}">Em manutenção</option>
+                                        <option value="{{old('os[status]', 'Aguardando peça')}}">Aguardando peça</option>
+                                        {{-- <option value="{{ old('os.status', 'Devolvido')}}">Devolvido</option>
+                                        <option value="{{ old('os.status', 'Finalizado')}}">Finalizado</option> --}}
                                     </select>
                             </div>
                         </div>                        
@@ -83,11 +85,11 @@
                                 <label>Serviço</label>
                                 {{-- <input type="hidden" name="service[0][id]" size=1 class="form-control"> 
                                 lembrar de inserir o id em service_id--}}
-                                <select type="text" name="service[0][name]" size=1 class="form-control">
+                                <select type="text" name="os[service_id]" size=1 class="form-control">
                                 {{-- {{$services->id}} --}}
                                     <option> </option>
                                     @foreach ($services as $service) 
-                                        <option value="{{$service->name}}">
+                                        <option value="{{$service->id}}">
                                             {{$service->name}}
                                         </option>
                                     @endforeach
@@ -96,9 +98,6 @@
                         </div>
                     </div>    
                     
-                    <div>
-                        General error: 1364 Field 'service' doesn't have a default value
-                    </div>
 
                     {{-- <div class="row">
                         <div class="col 12 col-sm-2 ">

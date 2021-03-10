@@ -10,6 +10,12 @@
         <link href="{{asset('css/styles.css')}}" rel="stylesheet" />
         {{-- <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" /> --}}
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js" crossorigin="anonymous"></script>
+
+        @yield('css')   
+
+        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+        
     </head>
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
@@ -51,7 +57,7 @@
                                 <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
                                 Clientes                                
                             </a>
-                            <a class="nav-link" href="{{--{{route('machines.index')}}--}}">
+                            <a class="nav-link" href="{{route('machines.index')}}">
                                 <div class="sb-nav-link-icon"><i class="fas fa-laptop-code"></i></div>
                                 Computadores
                             </a>
@@ -137,9 +143,16 @@
             </div>
         </div> 
         <script src="{{asset('js/jquery-3.5.1.min.js')}}"></script>
+        <script src="{{asset('js/jquery.mask.min.js')}}"></script>
         <script src="{{asset('js/bootstrap.bundle.min.js')}}"></script>
         <script src="{{asset('js/scripts.js')}}"></script>
+        <script src="{{asset('js/jquery.js')}}"></script>
+        <script src="{{asset('js/mailcheck.min.js')}}"></script>
+        <script src="{{asset('js/main.js')}}"></script>
+
+
         @yield('js')
+        
         {{-- 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
         <script src="assets/demo/chart-area-demo.js"></script>

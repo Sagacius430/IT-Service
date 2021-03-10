@@ -24,4 +24,10 @@ class Machine extends Model
     public function clients(){
         return $this->belongsTo('App\Client');
     }
+
+    public function os(){ 
+        
+        return $this->hasMany('App\Os');
+    }
+
 }

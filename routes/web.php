@@ -54,6 +54,11 @@ Route::middleware('guest')->group(function(){
     Route::get('login', 'LoginController@index')->name('login.index');
     
     Route::post('login', 'LoginController@login')->name('login.login');
+
+    // Route::post('/reset/password', 'AuthenticateController@resetPassword')->name('auth.resetLink');
+    // Route::post('/check/user/{id}/token', 'AuthenticateController@checkToken')->name('auth.checkToken');
+    // Route::post('/change/password/user/{id}', 'AuthenticateController@changePassword')->name('auth.changePassword');
+
 });
 
 Route::get('logout', 'LoginController@logout')->name('login.logout');
@@ -63,20 +68,26 @@ Route::middleware('auth')->group(function(){
 
     Route::get('dashboard', 'DashboardController@index')->name('dashboard.index');
     
+
     Route::get('reports/clients', 'ReportController@generateClientsReport')->name('reports.clients');
     Route::get('reports/os', 'ReportController@generateOsReport')->name('reports.os');
     
+
     Route::resource('users', 'UserController')->middleware('is-admin');
+
 
     Route::resource('clients', 'ClientController');
     Route::post('client/import', 'ClientController@import')->name('client.import');
     // Route::get('client/export', 'ClientController@export')->name('client.export');
     Route::post('client/export', 'ClientController@export')->name('client.export');
 
+    
     Route::resource('machines', 'MachineController');  
+
 
     Route::resource('services', 'ServiceController')->middleware('is-admin');
 
+    
 
     Route::get('os', 'OsController@index')->name('os.index');
     Route::get('/os/create/{client_id}', 'OsController@create')->name('os.create');

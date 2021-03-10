@@ -15,4 +15,9 @@ class Service extends Model
         'description',
         'value',
     ];
+
+    public function os(){ 
+        
+        return $this->hasMany('App\Os');
+    }
 }

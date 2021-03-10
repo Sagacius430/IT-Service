@@ -24,16 +24,16 @@ class ClientRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'=>'required',
-            'fone'=>'required',           
+            'name'      =>'required',
+            'fone'      =>'required',
         ];        
     }
 
     public function attributes()
     {
         return [
-            'name'=>'nome',
-            'fone'=>'telefone',
+            'name'      =>'Nome',
+            'fone'      =>'Telefone',
         ];
     }
     

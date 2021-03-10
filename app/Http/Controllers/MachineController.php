@@ -16,13 +16,14 @@ class MachineController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request, $id)
+    public function index()
     {   
-        $nome = Client::get('nome');
-        $id   = $id;
-        $machines = Machine::find(1);
+        // $nome = Client::get('nome');        
+        // $machines = Machine::find(1);
+        $clients   = Client::all();
+        $machines = Machine::paginate(5);
                                     //o compact envia a variável $machines para view
-        return view('clients.edit', compact('machines'));
+        return view('machines.index', compact('machines','clients'));
     }
 
     /**
@@ -33,7 +34,7 @@ class MachineController extends Controller
     public function create(Client $client)
     {
 
-        $machines = Machine::all();     
+        $machines = Machine::paginate(5);     
 
         return view('machines.create', compact('machines', 'client'));
     }    

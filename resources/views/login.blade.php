@@ -37,10 +37,30 @@
                                     <input type="password" name="password" class="form-control" placeholder="Senha">
                                 </div>
                                 <div class="text-center">
-                                    <button type="submit" class="btn btn-success">Login</button>
+                                    <button type="submit" class="btn btn-primary">
+                                        Login
+                                    </button>
                                 </div>
                             </form>
-                        </div>                        
+                            <form action="{{ route('login.login') }}" method="POST">
+                                <div class="mt-5" id="addRecoveryPass" style="display:none">
+                                    <div>
+                                        Insira um email para recuperação
+                                        <div class="mt-3 text-right">
+                                            <input type="email" name="email" class="form-control" placeholder="E-mail" id="email" >
+                                        </div>                                        
+                                        <div class="mt-3 text-right">
+                                            <button type="submit" class="btn btn-primary">
+                                                Enviar
+                                            </button>
+                                        </div>                                        
+                                    </div>                                    
+                                </div>
+                                <div class="mt-3 text-center">
+                                    <button type="button" class="btn btn-link text-secondary" onclick="add_div('addRecoveryPass')">Esqueceu a senha?</button>
+                                </div> 
+                            </form>
+                        </div>                       
                     </div>
                 </div>
             </div>            
@@ -50,6 +70,15 @@
 <script src="{{asset('js/jquery-3.5.1.mim.js')}}"></script>
 <script src="{{asset('js/bootstrap.bundle.mim.js')}}"></script>
 
-    
+<script>//script para adicionar mais divs para cadastro de computadores
+    function add_div(addRecoveryPass){
+        var display = document.getElementById(addRecoveryPass).style.display;
+        // if (display == "none")
+            document.getElementById(addRecoveryPass).style.display = "block"
+        // else
+        //     document.getElementById(el).style.display = 'none' 
+    } 
+</script>
+  
 </body>
 </html>

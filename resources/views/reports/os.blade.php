@@ -17,6 +17,7 @@
 
                 <table class="table mt-4">
                     <thead class="table-primary">
+                        <th class="align-middle">Entrada</th>
                         <th class="align-middle">Cliente</th>
                         <th class="align-middle">Serviço</th>
                         <th class="align-middle">Status</th>
@@ -26,16 +27,24 @@
                     <tbody>                        
                         @foreach ($os as $order)
                             <tr>
-                                @foreach ($clients as $client)
-                                    @if ($client->id == $order->client_id)
-                                        <td>{{$client->name}}
-                                    @endif
-                                @endforeach
+                                <td width="40">{{$order->created_at->format('d/m/Y')}}</td>
+                                <td>
+                                    @foreach ($clients as $client)
+                                        @if ($client->id == $order->client_id)
+                                            {{$client->name}}
+                                        @endif
+                                    @endforeach
                                 </td>
                                 <td>{{$order->service}}</td>
                                 <td>{{$order->status}}</td>
                                 {{-- <td>{{$order->finish}}</td> --}}
-                                <td>{{$order->user_id}}</td>                                
+                                <td>
+                                    @foreach ($users as $user)
+                                        @if ($user->id == $order->user_id)
+                                            {{$user->name}}
+                                        @endif
+                                    @endforeach
+                                    {{-- {{$order->user_id}}</td>                                 --}}
                                 </form>
                                 </td>
                             </tr>                            

@@ -1,0 +1,16 @@
+#order-card {
+  transition: 0.3s;
+}
+/* Usando esse */
+#order-card:hover {
+  transform: scale(1.1);
+}
+/* usando esse */
+#dashboard-card {
+  background-color: #65a0f8;
+  transition: 0.3s;
+}
+/* usando esse */
+#dashboard-card:hover {
+  transform: scale(1.1);
+}

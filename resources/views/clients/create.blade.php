@@ -49,7 +49,7 @@
                     </div>
             
                     <div class="row mt-2">
-                        <div class="col-12 col-sm-1">
+                        <div class="col-12 col-sm-2">
                             <div class="form-group">
                                 <label>CEP</label>
                                 <input type="text" name="address[zip_code]" class="form-control" id="zip_code"
@@ -264,39 +264,5 @@
 
 
 @endsection
-<script>//script para adicionar mais divs para cadastro de computadores
-    function add_div(addMachine){
-        var display = document.getElementById(addMachine).style.display;
-        // if (display == "none")
-            document.getElementById(addMachine).style.display = "block"
-        // else
-        //     document.getElementById(el).style.display = 'none' 
-    } 
-</script>
 
-@section('js')
-    <script>
-        //blur:quando clicar fora
-        //#zipcode: id do CEP no HTML
-        $(document).on('blur','#zip_code', function(){
-            //this.val: pega o valor e coloca na variável
-            let zipcode = $(this).val();
-            // console.log(zipcode);
-            $.ajax({
-                url: 'https://viacep.com.br/ws/'+zipcode+'/json/', 
-                method: 'GET',
-                dataType: 'json',
-                success: function(data){
-                    //colocando os dados nos campos correspondentes
-                    $('#city').val(data.localidade);
-                    $('#uf').val(data.uf);
-                    $('#district').val(data.bairro);
-                    $('#street').val(data.logradouro);
-                },
-                error: function(err){
-                    console.log(err);
-                }
-            });
-        });
-    </script>
-@endsection
+    

@@ -20,7 +20,7 @@
         <div class="card-body">        
             <div class="row">
                 <div class="col-12">
-                    <table class="table">
+                    <table class="table table-hover">
                         <thead class="table-primary">
                             <th class="align-middle">Nome</th>
                             <th class="align-middle">Telefone</th>
@@ -34,7 +34,7 @@
                                     <td>{{$client->name}}</td>
                                     <td>{{$client->fone}}</td>
                                     <td>
-                                        <a class="btn btn-warning" 
+                                        <a class="btn alert-warning" 
                                             href="{{ route('clients.edit', $client->id) }}">
                                             Editar
                                         </a>
@@ -45,7 +45,7 @@
                                         @csrf
 
                                         @method('DELETE')
-                                        <button class="btn btn-danger" type="submit">
+                                        <button class="btn alert-danger" type="submit">
                                             Apagar
                                         </button>
                                     </form>
@@ -72,10 +72,7 @@
         
         <div class="card-footer text-right">
             <div class="float-md-left">
-            <a class="btn btn-secondary" 
-                href="{{route('client.export')}}">
-                    Exportar para csv
-                </a> 
+                {!!$clients->links()!!}
             </div>        
             <a class="btn btn-success" 
                 href="{{ route('clients.create') }}">
@@ -96,11 +93,11 @@
                 <div class="row align-items-end">
                     <div class="col-12 col-sm-3">
                         <label>Data inicial</label>
-                        <input type="text" name="date_start" class="form-control">
+                        <input type="text" name="date_start" class="form-control" >
                     </div>
                     <div class="col-12 col-sm-3">
                         <label>Data final</label>
-                        <input type="text" name="date_end" class="form-control">
+                        <input type="text" name="date_end" class="form-control" >
                     </div>
                     <div class="col-12 col-sm-3">
                         <label>Tipo de arquivo de exportação</label>

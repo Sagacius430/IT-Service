@@ -21,8 +21,7 @@
                 <h6>Edição de Clientes</h6>
             </div>    
 
-            <div class="card-body">
-                
+            <div class="card-body">                
 
                     @csrf<!--tolken-->
                     @method('PUT'){{-- converte POST em PUT para o Laravel --}}

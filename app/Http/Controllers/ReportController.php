@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\{Client, Os};
+use App\{Client, Os, User};
 use App\Machine;
 use Carbon\Carbon;
 use PhpParser\Node\Stmt\Return_;
@@ -20,6 +20,7 @@ class ReportController extends Controller
     {
         $clients = new Client;        
 
+        //selecionar intervalo de data
         if ($request->date_start != '') {
             $dateStart = Carbon::parse($request->date_start)->startOfDay();
             $clients = $clients->where('created_at', '>=', $dateStart);
@@ -44,8 +45,10 @@ class ReportController extends Controller
     public function generateOsReport(Request $request)
     {
         $os = new Os;  
-        $clients = new Client;      
+        $clients = new Client;  
+        $users = new User;    
 
+        //selecionar intervalo de data
         if ($request->date_start != '') {
             $dateStart = Carbon::parse($request->date_start)->startOfDay();
             $os = $os->where('created_at', '>=', $dateStart);
@@ -56,9 +59,10 @@ class ReportController extends Controller
             $os = $os->where('created_at', '<=', $dateEnd);
         }
 
-        $os = $os->get();
+        $os      = $os->get();
         $clients = $clients->get();
+        $users   = $users->get();
 
-        return view('reports.os', compact('os','clients'));
+        return view('reports.os', compact('os', 'clients', 'users'));
     }
 }

@@ -42,8 +42,8 @@
                     <div class="col 12 col-sm-2">
                         <div class="form-group">
                             <label>Marca</label>
-                            <input type="text" name="machines[][brand]" class="form-control"
-                                value="{{ old('machine.brand', '') }}">
+                            <input type="text" name="machines[{{$newMachinekey}}][brand]" class="form-control"
+                                value="{{ old('machine.$newMachinekey.brand', '') }}">
                         </div>
                     </div>
                 </div>
@@ -52,15 +52,15 @@
                     <div class="col 12 col-sm-2">
                         <div class="form-group">
                             <label>Modelo</label>
-                            <input type="text" name="machines[][model]" class="form-control"
-                                value="{{ old('machine.model', '') }}">
+                            <input type="text" name="machines[{{$newMachinekey}}][model]" class="form-control"
+                                value="{{ old('machine.$newMachinekey.model', '') }}">
                         </div>
                     </div>
                     <div class="col 12 col-sm-2">
                         <div class="form-group">
                             <label>Número do serial</label>
-                            <input type="text" name="machines[][serial_number]" class="form-control"
-                                value="{{ old('machine.serial_number', '') }}">
+                            <input type="text" name="machines[{{$newMachinekey}}][serial_number]" class="form-control"
+                                value="{{ old('machine.$newMachinekey.serial_number', '') }}">
                         </div>
                     </div>
                 </div>
@@ -69,15 +69,15 @@
                     <div class="col 12 col-sm-2">
                         <div class="form-group">
                             <label>Descrição</label>
-                            <input type="text" name="machines[][description]" class="form-control"
-                                value="{{ old('machine.description', '') }}">                
+                            <input type="text" name="machines[{{$newMachinekey}}][description]" class="form-control"
+                                value="{{ old('machine.$newMachinekey.description', '') }}">                
                         </div>
                     </div> 
                     <div class="col 12 col-sm-2">
                         <div class="form-group">
                             <label>Avarias físicas</label>
-                            <input type="text" name="machines[][breakdowns]" class="form-control"
-                                value="{{ old('machine.breakdowns', '') }}">                      
+                            <input type="text" name="machines[{{$newMachinekey}}][breakdowns]" class="form-control"
+                                value="{{ old('machine.$newMachinekey.breakdowns', '') }}">                      
                         </div>
                     </div>
                     <div class="col 12 col-sm-2">
@@ -85,7 +85,7 @@
                             <label></label>
                             {{-- <input type="text" name="machines[][id]" class="form-control"
                                 value="{{ old('client.id', Request::query())}}"> --}}
-                                Argument 1 passed to Illuminate\Database\Eloquent\Builder::create() must be of the type array, null given, called in
+                                
                         </div>
                     </div>
                     
@@ -103,7 +103,7 @@
 <div class="col-12 mt-4">
     <div class="card-header">
         <div class="col 12">
-            <table class="table">  
+            <table class="table table-hover">  
                 <thead class="table-primary">
                     <th class="align-middle">Tipo</th>
                     <th class="align-middle">Marca</th>
@@ -122,4 +122,5 @@
         </div>
     </div>
 </div>
+<div>{!!$machines->links()!!}</div>
 @endsection

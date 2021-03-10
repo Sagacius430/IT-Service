@@ -22,7 +22,7 @@
         <div class="card-body">        
             <div class="row">
                 <div class="col-12">
-                    <table class="table">
+                    <table class="table table-hover">
                         <thead class="table-primary">
                             <th class="align-middle">Cliente</th>
                             <th class="align-middle">Tipo</th>
@@ -36,11 +36,11 @@
                             @foreach ($machines as $machine)
                                 <tr>
                                     <td>
-                                        {{-- @foreach ($clients as $client)
-                                            @if ($client->id == $order->client_id)
+                                        @foreach ($clients as $client)
+                                            @if ($client->id == $machine->client_id)
                                                 {{$client->name}}
                                             @endif
-                                        @endforeach --}}
+                                        @endforeach
                                     </td>
                                     <td>{{$machine->machine_type}}</td>
                                     <td>{{$machine->brand}}</td>
@@ -53,7 +53,11 @@
                         </tbody>                                    
                     </table>
                 </div>
+                
             </div>
+        </div>
+        <div>
+            {!!$machines->links()!!}
         </div>
     </div>
 </div>

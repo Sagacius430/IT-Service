@@ -16,9 +16,15 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::all();
+        $users = User::paginate(5);
+        // $user = $users;
+        // $user::find('$name');        
+        // $user::where('name',1)
+        //     ->orderBy('created_at')->take(10)->get();
+        // $user= new User;
+        // $user->name = $request->name ;
 
         return view('users.index', compact('users'));
         //
@@ -42,7 +48,7 @@ class UserController extends Controller
      */
     public function store(UserRequest $request)
     {        
-        //cadastrar os dasdos que estão vinso a requisição
+        //cadastrar os dasdos que estão vindo da requisição
         User::create($request->all());
 
         // DB::beginTransaction();
@@ -102,10 +108,13 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request,  $id)
     {
+        // return $request;
         DB::beginTransaction();
         try{ 
+
+            $user = User::findOrFail($id);            
             
             $user->update($request->all());
 
@@ -115,7 +124,7 @@ class UserController extends Controller
 
             DB::rollback();
             return back()
-                ->with('msg_error','Erro no servidor ao atualizar cliente');
+                ->with('msg_error','Erro no servidor ao atualizar usuário');
             
         }
 

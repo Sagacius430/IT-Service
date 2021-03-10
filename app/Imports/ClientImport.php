@@ -16,8 +16,10 @@ class ClientImport implements ToModel, withHeadingRow
     public function model(array $row)
     {
         return new Client([
+                            //tratamento para arquivos com cabacalho
             'name' => $row['nome'],
             'fone' => $row['telefone'],
         ]);
     }
+
 }

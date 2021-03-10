@@ -29,9 +29,14 @@ class LoginController extends Controller
             return redirect()->route('dashboard.index');
         }
         
+        $error = [
+            'msg_title' => 'Falha na autenticação!',
+            'msg_error' => 'Usuário ou senha incorreto.'
+          ];
+
 
         return redirect()->route('login.index')
-            ->with('msg_error','Falha na autenticação');
+            ->with($error);
 
     }
 
@@ -40,4 +45,13 @@ class LoginController extends Controller
         Auth::logout();
         return redirect()->route('login.index');
     }
+    
+    //testar recuperação de senha nesta função
+    public function ResetPassword(Request $request){
+        $password = [
+            
+        ];
+    }
+
+    
 }

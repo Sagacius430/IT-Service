@@ -34,8 +34,8 @@
                     <div class="col 12 col-sm-2 ">
                         <div class="form-group">
                             <label>Descrição</label>
-                            <input type="text" name="description" class="form-control" 
-                                value="{{old('description', '')}}"> 
+                            <textarea type="text" name="description" class="form-control" cols="30" rowspan="2"
+                                value="{{old('description', '')}}"> </textarea>                               
                         </div>
                     </div>
                 </div>
@@ -44,11 +44,13 @@
                     <div class="col 12 col-sm-2 ">
                         <div class="form-group">
                             <label>Valor</label>
-                            <input type="text" name="value" class="form-control" 
+                            <input type="text" name="value" class="form-control" id="value" 
                                 value="{{old('value', '')}}">
                         </div>
                     </div>
+                </div>
 
+                <div class="row">
                     <div class="col 12 col-sm-2 ">
                         <div class="form-group">
                             <label>Tipo</label>
@@ -57,7 +59,6 @@
                         </div>
                     </div>
                 </div>
-                
             
         </div> 
         <div class="card-footer text-right">
@@ -71,17 +72,17 @@
     <div class="card"> 
         <div class="card-header">
             <div class="col 12">
-                <table class="table">  
+                <table class="table table-hover">  
                     <thead class="table-primary">
                         <th class="align-middle">nome</th>
-                        <th class="align-middle">Descrição</th>
-                        <th class="align-midle">Valor</th>                
+                        <th class="align-middle w-75 p-3">Descrição</th>
+                        <th class="align-midle p-3">Valor</th>                
                     </thead>
                     <tbody>           
                         @foreach ($services as $service)
                             <tr>
                                 <td>{{$service->name}}</td>
-                                <td>{{$service->description}}</td>
+                                <td >{{$service->description}}</td>{{--width="900"--}}
                                 <td>{{$service->value}}</td>                        
                             </tr>
                         @endforeach

@@ -5,6 +5,9 @@
     <li class="breadcrumb-item">
         <a href="{{route('dashboard.index')}}">Painel</a>
     </li>
+    <li class="breadcrumb-item active">
+        <a href="{{route('users.index')}}">Usuários</a>
+    </li>
     <li class="breadcrumb-item active">Atualizar Usuarios</li>
 @endsection
 
@@ -54,7 +57,7 @@
                     <div class="col 12 col-sm-2 ">
                         <div class="form-group">
                             <label>Telefone</label>
-                            <input name="fone" type="text" class="form-control" 
+                            <input name="fone" type="text" class="form-control" id="fone"
                                 value="{{$user->fone}}">
                         </div>
                     </div>            

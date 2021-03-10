@@ -73,6 +73,7 @@
                         <div class="form-group">
                             <label>Status</label>                         
                             <select name="os[status]" class="form-control">
+                                {{-- <option {{$os->status == 'Aguardando serviço' ? 'selected':''}}value="Aguardando serviço">Aguardando Serviço</option> --}}
                                 <option {{$os->status == 'Em manutenção' ? 'selected':''}}value="Em manutenção">Em manutenção</option>
                                 <option {{$os->status == 'Aguardando peça' ? 'selected':''}}value="Aguardando peça">Aguardando peça</option>
                                 <option {{$os->status == 'Devolvido' ? 'selected':''}}value="Devolvido">Devolvido</option>

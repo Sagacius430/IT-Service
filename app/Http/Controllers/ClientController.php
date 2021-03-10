@@ -3,16 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\{Machine, CLient};
-use App\Http\Requests\ClientRequest;
-use Facade\FlareClient\Http\Client as HttpClient;
+use App\Http\Requests\{ClientRequest, ExportRequest};
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use PhpParser\Node\Stmt\Return_;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\ClientImport;
 use App\Exports\ClientExport;
 use Carbon\Carbon;
-use function GuzzleHttp\Promise\all;
 
 class ClientController extends Controller
 {
@@ -23,7 +20,7 @@ class ClientController extends Controller
      */
     public function index()
     {
-        $clients =  Client::all();
+        $clients =  Client::paginate(5);
         
         return view('clients.index', compact('clients'));  
         //return view('client');
@@ -46,7 +43,7 @@ class ClientController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ClientRequest $request)
     {
         // $clientId = $request->all();
         // $client = Client::create($clientId);
@@ -169,12 +166,13 @@ class ClientController extends Controller
     }
 
     public function import(Request $request){
-
-        $file = $request->file->get('file');
+        
+        $file = $request->files->get('file');
         
         try{
 
         Excel::import(new ClientImport, $file);
+        
         
         } catch(\Exception $exception){
 
@@ -192,20 +190,26 @@ class ClientController extends Controller
     // }
 
     public function export(Request $request){
+        
+
+        if($request->dateStart == '2020-01-01'){
+            $dateStart = Carbon::parse('1982-06-09');
+        }       
+
+        if($request->dateEnd == ''){
+            $dateEnd = Carbon::now();
+        }
 
         $dateStart = Carbon::parse($request->date_start)->startOfDay();
         $dateEnd = Carbon::parse($request->date_end)->endOfDay();
         $exportFileType = $request->export_file_type;
         
-        // if($dateStart == ''){
-        //     $dateStart = Carbon::createFromFormat('Y-m-d', '1982-06-09');
-        // }       
-        // if($dateEnd == ''){
-        //     $dateEnd = Carbon::now();
-        // }
-        // return $dateStart;
+        
+        
 
-        return Excel::download( new clientExport($dateStart, $dateEnd), 'Clients' . $exportFileType);
+        // dd($dateStart);
+
+        return Excel::download( new clientExport($dateStart, $dateEnd), 'Clients.'.$exportFileType);
 
     }
 }

@@ -5,7 +5,7 @@
     <li class="breadcrumb-item">
         <a href="{{route('dashboard.index')}}">Painel</a>
     </li>
-    <li class="breadcrumb-item active">Usuarios</li>
+    <li class="breadcrumb-item active">Usuários</li>
 @endsection
 
 @section('content')
@@ -18,9 +18,19 @@
         </div>
 
         <div class="card-body">
-            <div class="row">            
-                <div class="col-12">
-                    <table class="table">
+
+            <div class="card mt-4">
+                <div class="card-body">
+                    <div class="col-12 table-responsive">
+                        <div>Nome</div>
+                        <div><input id="name"/></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-4">            
+                <div class="col-12 table-responsive">
+                    <table class="table table-hover">
                         <thead class="table-primary">
                             <tr>
                                 <th class="align-middle">Nome</th>
@@ -42,7 +52,8 @@
                                     <td>{{$user->role}}</td>                                
                                     <td>{{$user->created_at->format('d/m/Y')}}</td>
                                     <td>
-                                        <a class="btn btn-warning" href="{{ route('users.edit', $user->id) }}">
+                                        <a class="btn alert-warning" 
+                                            href="{{ route('users.edit', $user->id) }}">
                                             Editar
                                         </a>
                                     </td>
@@ -52,7 +63,7 @@
                                             @csrf
                                             @method('DELETE')
                                             
-                                            <button class="btn btn-danger" type="submit">
+                                            <button class="btn alert-danger" type="submit">
                                                 Apagar
                                             </button>
                                         </form>
@@ -64,9 +75,23 @@
                 </div>
             </div>
         </div>
+        {!!$users->links()!!}
         <div class="card-footer text-right">
             <a class="btn btn-success" href="{{ route('users.create')}}" >Novo usuário</a>
         </div>
     </div>
 </div>
 @endsection
+
+<script>
+    $('#filtro-nome').keyup(function() {
+    var nomeFiltro = $(this).val().toLowerCase();
+    console.log(nomeFiltro);
+    $('table tbody').find('tr').each(function() {
+        var conteudoCelula = $(this).find('td:first').text();
+        console.log(conteudoCelula);
+        var corresponde = conteudoCelula.toLowerCase().indexOf(nomeFiltro) >= 0;
+        $(this).css('display', corresponde ? '' : 'none');
+    });
+});
+</script>

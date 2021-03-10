@@ -17,12 +17,14 @@
 
                 <table class="table mt-4">
                     <thead class="table-primary">
+                        <th class="align-middle">Cadastrado</th>
                         <th class="align-middle">Nome</th>
                         <th class="align-middle">Telefone</th>
                     </thead>
                     <tbody>                        
                         @foreach ($clients as $client)
                             <tr>
+                                <td width="40">{{$client->created_at->format('d/m/y')}}</td>
                                 <td>{{$client->name}}</td>                                
                                 <td>{{$client->fone}}</td>
                                 <td>

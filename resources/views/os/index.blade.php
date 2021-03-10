@@ -8,28 +8,59 @@
     <li class="breadcrumb-item active">Ondens de Serviço</li>
 @endsection
 
+@section('css')
+  <link rel="stylesheet" href="{{ asset('css/movement-styles.css') }}">
+@endsection
+
 @section('content')
 
 <div class="col-12">
     <div class="row">
-        <div class="col-xl-3 col-md-6">
-            <div class="card bg-primary text-white mb-4">
+        <div class="col-xl-4 col-md-6" id="order-card">
+            <div class="card alert-secondary text-white mb-4" >
+                <div class="card-footer d-flex align-items-center justify-content-between"></div>
+                <div class="card-body">                    
+                        <div class="d-flex justify-content-between align-items-center alert-link" onclick="shiftTable()">
+                            Aguardando serviço
+                            <span class="h4">{{$status['aguardando']}}</span>
+                        </div>                       
+                </div>
+                
+            </div>
+        </div>
+        <div class="col-xl-4 col-md-6" id="order-card">
+            <div class="card alert-info text-white mb-4">
                 <div class="card-footer d-flex align-items-center justify-content-between"></div>
                 <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-center">
-                        Aguardando peça
-                        <span class="h4">{{$status['aguardando_peça']}}</span>
+                    <div class="d-flex justify-content-between align-items-center alert-link">
+                        Em garantia
+                        <span class="h4">{{$status['em_garantia']}}</span>
                     </div>
                 </div>
                 
             </div>
         </div>
-        <div class="col-xl-3 col-md-6">
-            <div class="card bg-warning text-white mb-4">
+        <div class="col-xl-4 col-md-6" id="order-card">
+            <div class="card alert-danger text-white mb-4">
+                <div class="card-footer d-flex align-items-center justify-content-between"></div>
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center alert-link">
+                        Devolvido
+                        <span class="h4">{{$status['devolvido']}}</span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>        
+    </div>
+
+    <div class="row">  
+        <div class="col-xl-4 col-md-6" id="order-card">
+            <div class="card alert-warning text-white mb-4">
                 <div class="card-footer d-flex align-items-center justify-content-between"></div>
                 <div class="card-body">
                     <div>
-                        <div class="d-flex justify-content-between align-items-center">
+                        <div class="d-flex justify-content-between align-items-center alert-link">
                             Em manutenção
                             <span class="h4">{{$status['em_manutenção']}}</span>
                         </div>
@@ -38,31 +69,32 @@
                 
             </div>
         </div>
-        <div class="col-xl-3 col-md-6">
-            <div class="card bg-success text-white mb-4">
+        <div class="col-xl-4 col-md-6" id="order-card">
+            <div class="card alert-primary text-white mb-4">
                 <div class="card-footer d-flex align-items-center justify-content-between"></div>
                 <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-center">
+                    <div class="d-flex justify-content-between align-items-center alert-link">
+                        Aguardando peça
+                        <span class="h4">{{$status['aguardando_peça']}}</span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>        
+        <div class="col-xl-4 col-md-6" id="order-card">
+            <div class="card alert-success text-white mb-4">
+                <div class="card-footer d-flex align-items-center justify-content-between"></div>
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center alert-link">
                         Finalizado
                         <span class="h4">{{$status['finalizado']}}</span>
                     </div>
                 </div>
                 
             </div>
-        </div>
-        <div class="col-xl-3 col-md-6">
-            <div class="card bg-danger text-white mb-4">
-                <div class="card-footer d-flex align-items-center justify-content-between"></div>
-                <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-center">
-                        Devolvido
-                        <span class="h4">{{$status['devolvido']}}</span>
-                    </div>
-                </div>
-                
-            </div>
-        </div>
+        </div>        
     </div>
+
 </div>
 
 <div class="col-12">   
@@ -75,17 +107,19 @@
         <div class="card-body">        
             <div class="row">
                 <div class="col-12">
-                    <table class="table">
+                    <table class="table table-hover" id="tableIndex">
                         <thead class="table-primary">
                             <th class="align-middle">Cliente</th>
                             <th class="align-middle">Serviço</th>
                             <th class="align-middle">Status</th>
-                            <th class="align-middle">Garantia</th>
-                            <th class="align-middle">Finalizado</th>    
+                            <th class="align-middle">Dias</th>{{--tempo de OS aberta--}}
+                            {{-- <th class="align-middle">Garantia</th>
+                            <th class="align-middle">Finalizado</th>     --}}
                             <th class="align-middle">Técnico</th>
                             <th class="align-middle" colspan="2">Ações</th>                        
                         </thead>
-                        <tbody>                        
+                        
+                        <tbody>                    
                             @foreach ($orders as $order)
                                 <tr>
                                     <td>
@@ -96,9 +130,10 @@
                                         @endforeach
                                     </td>
                                     <td>{{$order->service}}</td>
-                                    <td>{{$order->status}}</td>
-                                    <td>{{$order->guarantee}}</td>
-                                    <td>{{$order->finish}}</td>
+                                    <td>{{$order->status}}</td>                                    
+                                    <td>{{$dateNow->diffInDays($order->created_at)}}</td>
+                                    {{-- <td>{{$order->guarantee}}</td> --}}
+                                    {{-- <td>{{$order->finish}}</td> --}}
                                     <td>
                                         @foreach ($users as  $user)
                                             @if ($user->id == $order->user_id)
@@ -107,7 +142,7 @@
                                         @endforeach
                                     </td>
                                     <td>
-                                        <a class="btn btn-warning" 
+                                        <a class="btn alert-warning" 
                                             href="{{ route('os.edit', $order->id) }}">
                                             Editar 
                                         </a> 
@@ -118,14 +153,71 @@
                                         @csrf
 
                                         @method('DELETE')
-                                        <button class="btn btn-danger" type="submit">
+                                        <button class="btn alert-danger" type="submit">
                                             Apagar
                                         </button>
                                     </form>
                                     </td>
                                 </tr>                            
                             @endforeach
-                        </tbody>                                    
+                        </tbody>
+                    </table>
+
+                    <table class="table table-hover">
+                        <thead class="table-primary">
+                            <th class="align-middle">Cliente</th>
+                            <th class="align-middle">Serviço</th>
+                            <th class="align-middle">Status</th>
+                            <th class="align-middle">Dias</th>{{--tempo de OS aberta--}}
+                            <th class="align-middle">Garantia até</th>
+                            {{-- <th class="align-middle">Finalizado</th>     --}}
+                            <th class="align-middle">Técnico</th>
+                            <th class="align-middle" colspan="2">Ações</th>                        
+                        </thead>
+                        <tbody>                        
+                            @foreach ($orders as $order)
+                                @if ($order->guarantee != null)  
+                                    <tr>
+                                        <td>
+                                            @foreach ($clients as $client)
+                                                @if ($client->id == $order->client_id)
+                                                    {{$client->name}}
+                                                @endif
+                                            @endforeach
+                                        </td>
+                                        <td>{{$order->service}}</td>
+                                        <td>{{$order->status}}</td>                                    
+                                        <td>{{$dateNow->diffInDays($order->created_at)}}</td>
+                                        <td>{{$order->guarantee}}</td>
+                                        {{-- <td>{{$order->finish}}</td> --}}
+                                        <td>
+                                            @foreach ($users as  $user)
+                                                @if ($user->id == $order->user_id)
+                                                    {{$user->name}}
+                                                @endif
+                                            @endforeach
+                                        </td>
+                                        <td>
+                                            <a class="btn alert-warning" 
+                                                href="{{ route('os.edit', $order->id) }}">
+                                                Editar 
+                                            </a> 
+                                        </td>
+                                        <td>
+                                        <form action="{{ route('os.destroy', $order->id) }}" method="POST">
+
+                                            @csrf
+
+                                            @method('DELETE')
+                                            <button class="btn alert-danger" type="submit">
+                                                Apagar
+                                            </button>
+                                        </form>
+                                        </td>
+                                    </tr>   
+                                @endif                         
+                            @endforeach
+                        </tbody>
                     </table>
                 </div>
             </div>
@@ -133,3 +225,17 @@
     </div>
 </div>
 @endsection                       
+
+<script>
+    function shiftTable(){
+        document.getElementById("tableIndex")
+    }
+
+    $(document).ready(function() {
+        $('.table table-hover').select2();
+    });
+    
+    $(".js-example-theme-single").select2({
+        theme: "classic"
+    }); 
+</script>

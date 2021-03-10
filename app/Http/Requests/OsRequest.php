@@ -24,18 +24,22 @@ class OsRequest extends FormRequest
     public function rules()
     {
         return [
-        'service'    =>'required',        
+        'service_id' =>'required',        
         'status'     =>'required',
         'machines_id'=>'required',
+        // 'user_id'    =>'required',
+        // 'client_id'  =>'required',
         ];
     }
 
     public function attributes()
     {
         return [
-            'service'     =>'serviço',
+            'service_id'  =>'serviço',
             'status'      =>'status',
-            'machines_id' => 'computador',
+            'machines_id' =>'computador',
+            // 'user_id'     =>'Usuário',
+            // 'client_id'   =>'cliente',
         ];
     }
 

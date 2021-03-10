@@ -54,7 +54,7 @@
                     <div class="col 12 col-sm-2 ">
                         <div class="form-group">
                             <label>Valor</label>
-                            <input name="service[value]" type="text" class="form-control" 
+                            <input name="service[value]" type="text" class="form-control" id="value"
                                 value="{{old('service.value', $service->value)}}">
                         </div>
                     </div>     

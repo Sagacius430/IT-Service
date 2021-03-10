@@ -19,14 +19,14 @@
 
         <div class="card-body">        
             <div class="row">
-                <div class="col-12">
-                    <table class="table">
+                <div class="col-12 table-responsive">
+                    <table class="table table-hover">
                         <thead class="table-primary">
                             <th class="align-middle">Nome</th>
                             <th class="align-middle">Tipo</th>
-                            <th class="align-middle">Descrição</th>
-                            <th class="align-middle">Valor</th>
-                            <th class="align-middle" colspan="2">Ações</th>
+                            <th class="align-middle w-50 p-3">Descrição</th>
+                            <th class="align-middle p-3">Valor</th>
+                            <th class="align-middle p-3" colspan="2">Ações</th>
                         </thead>
                         <tbody>                        
                             @foreach ($services as $service)
@@ -36,7 +36,7 @@
                                     <td>{{$service->description}}</td>
                                     <td>{{$service->value}}</td>
                                     <td>
-                                        <a class="btn btn-warning" 
+                                        <a class="btn alert-warning" 
                                             href="{{ route('services.edit', $service->id) }}">
                                             Editar
                                         </a>
@@ -47,7 +47,7 @@
                                         @csrf
 
                                         @method('DELETE')
-                                        <button class="btn btn-danger" type="submit">
+                                        <button class="btn alert-danger" type="submit">
                                             Apagar
                                         </button>
                                     </form>
@@ -58,6 +58,9 @@
                     </table>                
                 </div>
             </div>
+        </div>
+        <div>
+            {!!$services->links()!!}
         </div>
         <div class="card-footer text-right">
             <a class="btn btn-success" 
