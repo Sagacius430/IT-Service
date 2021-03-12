@@ -55,7 +55,8 @@
                                 <select type="text" name="os[machine_id]" size=1 class="form-control">
                                     <option> </option>
                                     @foreach ($machines as $machine)
-                                        <option {{--{{old('os[machine_id]','') == $machine->id ? 'selected':''}}--}} value="{{$machine->id}}">
+                                        <option {{--{{old('os[machine_id]','') == $machine->id ? 'selected':''}}--}} 
+                                            value="{{$machine->id}}">
                                             {{$machine->brand}} {{$machine->serial_number}}
                                         </option>                                   
                                     @endforeach

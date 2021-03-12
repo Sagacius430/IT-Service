@@ -25,12 +25,12 @@ class MachineRequest extends FormRequest
     {
         return [
             
-            'machine_type' =>'required',
-            'brand'        =>'required',
-            'model'        =>'required',
-            'serial_number'=>'required',
-            'description'  =>'required',
-            'breakdowns'   =>'required',
+            'machine.machine_type' =>'required',
+            'machine.brand'        =>'required',
+            'machine.model'        =>'required',
+            'machine.serial_number'=>'required',
+            'machine.description'  =>'required',
+            'machine.breakdowns'   =>'required',
 
         ];
     }    
@@ -39,13 +39,13 @@ class MachineRequest extends FormRequest
     {
         return [
 
-            'machine_type'  =>'tipo de computador',
-            'name'          =>'Nome',
-            'brand'         =>'marca',
-            'model'         =>'modelo',
-            'serial_number' =>'número de série',
-            'description'   =>'descrição',
-            'breakdowns'    =>'avarias',
+            'machine.machine_type'  =>'tipo de computador',
+            'machine.name'          =>'nome',
+            'machine.brand'         =>'marca',
+            'machine.model'         =>'modelo',
+            'machine.serial_number' =>'número de série',
+            'machine.description'   =>'descrição',
+            'machine.breakdowns'    =>'avarias',
 
         ];
     }

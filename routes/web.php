@@ -1,10 +1,5 @@
 <?php
 
-use App\Http\Controllers\ClientController;
-use App\Http\Controllers\OsController;
-use App\Http\Controllers\ServiceController;
-use App\Http\Controllers\UserController;
-use App\Os;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,18 +12,7 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-// //rota para listagem
-// Route::get('/clients', 'ClientController@index')->name('clients.index');
-// //rota para o formulário onde crio o client
-// Route::get('/clients/create', 'ClientController@create')->name('clients.create');
-// //rota de edição dos dados
-// Route::get('/clients/{id}/edit', 'ClientController@edit')->name('clients.edit');
-// //rota POST pava enviar dados do formulário
-// Route::post('/clients/store', 'ClientController@store')->name('clients.store');
-// //rota PUT para atuliazar dados
-// Route::put('/clients/{id}', 'ClientController@update')->name('clients.updade');
-// //rota que apaga dados do banco
-// Route::delete('/clients/{id}', 'ClientController@destroy')->name('clients.destroy');
+
 
 // caso não funcione o login
 // Route::resource('clients', 'ClientController');
@@ -55,10 +39,9 @@ Route::middleware('guest')->group(function(){
     
     Route::post('login', 'LoginController@login')->name('login.login');
 
-    // Route::post('/reset/password', 'AuthenticateController@resetPassword')->name('auth.resetLink');
-    // Route::post('/check/user/{id}/token', 'AuthenticateController@checkToken')->name('auth.checkToken');
-    // Route::post('/change/password/user/{id}', 'AuthenticateController@changePassword')->name('auth.changePassword');
+    Auth::routes(['register'=>FALSE]);
 
+    // Route::get('/home', 'HomeController@index')->name('home');
 });
 
 Route::get('logout', 'LoginController@logout')->name('login.logout');
@@ -68,27 +51,45 @@ Route::middleware('auth')->group(function(){
 
     Route::get('dashboard', 'DashboardController@index')->name('dashboard.index');
     
-
+    // Relatórios Clientes Ordem de serviço
     Route::get('reports/clients', 'ReportController@generateClientsReport')->name('reports.clients');
     Route::get('reports/os', 'ReportController@generateOsReport')->name('reports.os');
     
+    //usuários
+    Route::resource('users', 'UserController')->middleware('auth');
 
-    Route::resource('users', 'UserController')->middleware('is-admin');
 
 
-    Route::resource('clients', 'ClientController');
-    Route::post('client/import', 'ClientController@import')->name('client.import');
+    //Clientes
+    Route::get('clients', 'ClientController@index')->name('clients.index');
+    Route::get('clients/create', 'ClientController@create')->name('clients.create');
+    Route::get('clients/{id}/edit', 'ClientController@edit')->name('clients.edit');
+    Route::put('clients/{id}', 'ClientController@update')->name('clients.update');
+    Route::post('clients/store', 'ClientController@store')->name('clients.store');
+    Route::delete('clients/{id}', 'ClientController@destroy')->name('clients.destroy');
+
+    // Route::resource('clients', 'ClientController');
+    
+    //Importar e exportar Clientes
+    Route::post('clients/import', 'ClientController@import')->name('clients.import');
     // Route::get('client/export', 'ClientController@export')->name('client.export');
-    Route::post('client/export', 'ClientController@export')->name('client.export');
+    Route::post('clients/export', 'ClientController@export')->name('clients.export');
+
 
     
-    Route::resource('machines', 'MachineController');  
 
+    //Computadores
+    Route::get('machines', 'MachineController@index')->name('machines.index');
+    Route::get('machines/create/{client_id}', 'MachineController@create')->name('machines.create');
+    Route::post('machines/store', 'MachineController@store')->name('machines.store');
+    // Route::get('machines/{id}/edit', 'MachineController@edit')->name('machines.edit');
+    
+    // Route::resource('machines', 'MachineController');  
 
+    //serviços
     Route::resource('services', 'ServiceController')->middleware('is-admin');
-
     
-
+    //Ordens de serviço
     Route::get('os', 'OsController@index')->name('os.index');
     Route::get('/os/create/{client_id}', 'OsController@create')->name('os.create');
     Route::get('/os/{client_id}/edit', 'OsController@edit')->name('os.edit');
@@ -98,3 +99,4 @@ Route::middleware('auth')->group(function(){
     
     // Route::resource('os','osController');
 });
+

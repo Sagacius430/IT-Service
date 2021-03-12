@@ -36,11 +36,11 @@ class Client extends Model
 
     }
 
-    public function machine(){
+    // public function machine(){
 
-        return $this->hasOne('App\Machine');
+    //     return $this->hasOne('App\Machine');
 
-    }
+    // }
 
     public function clients(){
         return $this->hasMany('App\Client');

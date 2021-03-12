@@ -70,7 +70,7 @@
 <script src="{{asset('js/jquery-3.5.1.mim.js')}}"></script>
 <script src="{{asset('js/bootstrap.bundle.mim.js')}}"></script>
 
-<script>//script para adicionar mais divs para cadastro de computadores
+<script>//script para adicionar mais divs 
     function add_div(addRecoveryPass){
         var display = document.getElementById(addRecoveryPass).style.display;
         // if (display == "none")

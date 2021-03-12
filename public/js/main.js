@@ -103,7 +103,7 @@ $(document).ready(function(){
     $(document).on('blur','#zip_code', function(){
         //this.val: pega o valor e coloca na variável
         let zipcode = $(this).val();
-        $("#zip_code").mask("00.000-000")
+        $("#zip_code").mask("00000-000")
         // console.log(zipcode);
         $.ajax({
             url: 'https://viacep.com.br/ws/'+zipcode+'/json/', 

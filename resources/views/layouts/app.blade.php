@@ -30,7 +30,7 @@
                         {{auth()->user()->name}}
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-                        <a class="dropdown-item" href="{{route('login.logout')}}">
+                        <a class="dropdown-item" href="{{ route('logout') }}">
                             <i class="fas fa-power-off"></i>
                             Sair
                         </a>

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\{Machine, CLient};
+use App\{Machine, Client};
 use App\Http\Requests\{ClientRequest, ExportRequest};
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -43,7 +43,7 @@ class ClientController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ClientRequest $request)
+    public function store(Request $request)
     {
         // $clientId = $request->all();
         // $client = Client::create($clientId);
@@ -61,9 +61,9 @@ class ClientController extends Controller
             $client->address()->create($request['address']);             
             
             foreach ($request->machines as $machine){  
-                //**Esta cadastrando somente se for dois computadores.
-                //**verificar permissão para cadastrar um tbm
+
                 $client->machines()->create($machine);                
+            
             }
             DB::commit();
 
@@ -94,15 +94,18 @@ class ClientController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Client $client, Machine $machine)
+    public function edit($id)//usa o id caso não esteja usando rotas resoures
     {        
-        // $client = Client::findOrFail($id); // buscar pelo ID
+        $client = Client::findOrFail($id);
+
+        // $client_id = $client->id;
         // $machines = Machine::all(); 
         // foreach($machines as $machine){
-            // $machines = $client->machine()->where('id', $machine['id']);
+        //     $machine = Machine::findOrFail($client_id);            
         // }
+        
                                     //compact envia a variável 'client' para view
-        return view('clients.edit', compact('client', 'machine'));
+        return view('clients.edit', compact('client'));
     }
 
     /**
@@ -112,18 +115,34 @@ class ClientController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Client $client)
+    public function update(Request $request, $id)
     {                     
+        
         DB::beginTransaction();
         try{ 
+
+            $client = Client::findOrFail($id);
             //atualizando o CLiente
             $client->update($request['client']);
 
             //atualizando o endereço
             $client->address()->update($request['address']);
 
+            //atualizando os computadores
+            foreach($request->machines as $machine){
+                $machineClient = $client->machines()->where('id', $machine['id']);
+                
+                $machineClient->update([
+                    'machine_type'  => $machine['machine_type'],
+                    'brand'         => $machine['brand'],
+                    'model'         => $machine['model'],
+                    'serial_number' => $machine['serial_number'],
+                    'description'   => $machine['description'],
+                    'breakdowns'    => $machine['breakdowns']
+                ]);
+            }
             // $client->machines()->update($request['machine']);
-
+            
             DB::commit();
 
         } catch(\Exception $exception){
@@ -156,13 +175,22 @@ class ClientController extends Controller
      */
     public function destroy($id)
     {
-        $client = Client::findOrFail($id);
+        try{
+            $client = Client::findOrFail($id);
 
-        $client->delete();
-        // $client->address()->delete;
+            $client->delete();
+            // $client->address()->delete;
+        }catch(\Exception $exception){
+
+            DB::rollback();
+            return back()
+                ->with('msg_error','Erro no servidor ao atualizar cliente');
+            
+        }        
 
         return redirect()
-            ->route('clients.index');
+            ->route('clients.index')
+            ->with('msg_success', 'Cliente deletado');
     }
 
     public function import(Request $request){

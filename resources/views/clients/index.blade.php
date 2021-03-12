@@ -88,16 +88,16 @@
         Exportação
     </div>
         <div class="card-body">
-            <form action="{{ route('client.export') }}" method="POST">
+            <form action="{{ route('clients.export') }}" method="POST">
                 @csrf
                 <div class="row align-items-end">
                     <div class="col-12 col-sm-3">
                         <label>Data inicial</label>
-                        <input type="text" name="date_start" class="form-control" >
+                        <input type="text" name="date_start" class="form-control" id="date">
                     </div>
                     <div class="col-12 col-sm-3">
                         <label>Data final</label>
-                        <input type="text" name="date_end" class="form-control" >
+                        <input type="text" name="date_end" class="form-control" id="date">
                     </div>
                     <div class="col-12 col-sm-3">
                         <label>Tipo de arquivo de exportação</label>

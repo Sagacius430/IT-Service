@@ -74,15 +74,15 @@
                         <div class="form-group">
                             <label>Senha</label>
                             <input type="password" name="password" class="form-control" id="password" onkeyup="javascript:testPwd()"
-                            value="{{old('password', '')}}" placeholder="digite uma pwd">
+                            value="{{old('password', '')}}" placeholder="digite uma senha">
                             <table class="mt-3" id="showStrength"></table>
                         </div>
                     </div>
                 
                     <div class="col 12 col-sm-2 ">
                         <div class="form-group">
-                            <label>Confirmar pwd</label>
-                            <input type="password" name="password_confirmation" class="form-control" placeholder="redigite a pwd">
+                            <label>Confirmar senha</label>
+                            <input type="password" name="password_confirmation" class="form-control" placeholder="redigite a senha">
                         </div>
                     </div>
                 </div>

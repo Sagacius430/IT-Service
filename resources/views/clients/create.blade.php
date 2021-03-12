@@ -2,28 +2,29 @@
 
 @section('breadcrumb')
     <li class="breadcrumb-item">
-        <a href="{{route('dashboard.index')}}">Painel</a>
+        <a href="{{ route('dashboard.index') }}">Painel</a>
     </li>
     <li class="breadcrumb-item active">
-        <a href="{{route('clients.index')}}">Serviços</a>
+        <a href="{{ route('clients.index') }}">Serviços</a>
     </li>
     <li class="breadcrumb-item active">Novo Cliente</li>
 @endsection
 
 @section('content')
 
-<div class="col-12">
-    <form action="{{ route('clients.store') }}" method="POST">
-        <div class="card"> 
-            
-            <div class="card-header">
-                Cadastro de clientes
-            </div>
-            
-            <div class="card-body">        
-                    
-                    @csrf<!--tolken-->
-                    
+    <div class="col-12">
+        <form action="{{ route('clients.store') }}" method="POST">
+            <div class="card">
+
+                <div class="card-header">
+                    Cadastro de clientes
+                </div>
+
+                <div class="card-body">
+
+                    @csrf
+                    <!--tolken-->
+
                     <div class="row">
                         <div class="col 12 col-sm-3">
                             <div class="form-group">
@@ -40,14 +41,14 @@
                                     value="{{ old('client.fone', '') }}">
                             </div>
                         </div>
-                    </div>                    
+                    </div>
                     <div class="row mt-4">
                         <div class="col-12">
                             <h6>Endereço</h6>
                             <hr>
                         </div>
                     </div>
-            
+
                     <div class="row mt-2">
                         <div class="col-12 col-sm-2">
                             <div class="form-group">
@@ -60,25 +61,25 @@
                             <div class="form-group">
                                 <label>Cidade</label>
                                 <input type="text" name="address[city]" class="form-control" id="city"
-                                value="{{ old('address.city', '') }}">
+                                    value="{{ old('address.city', '') }}">
                             </div>
                         </div>
                         <div class="col-12 col-sm-1">
                             <div class="form-group">
                                 <label>UF</label>
                                 <input type="text" name="address[uf]" class="form-control" id="uf"
-                                value="{{ old('address.uf', '') }}">
+                                    value="{{ old('address.uf', '') }}">
                             </div>
                         </div>
                         <div class="col-12 col-sm-2">
                             <div class="form-group">
                                 <label>Bairro</label>
                                 <input type="text" name="address[district]" class="form-control" id="district"
-                                value="{{ old('address.district', '') }}">
+                                    value="{{ old('address.district', '') }}">
                             </div>
                         </div>
                     </div>
-                    <div  class="row mt-2">                
+                    <div class="row mt-2">
                         <div class="col-12 col-sm-3">
                             <div class="form-group">
                                 <label>Logradouro</label>
@@ -90,7 +91,7 @@
                             <div class="form-group">
                                 <label>Número</label>
                                 <input type="text" name="address[number]" class="form-control" id="number"
-                                value="{{ old('address.number', '') }}">
+                                    value="{{ old('address.number', '') }}">
                             </div>
                         </div>
                         <div class="col-12 col-sm-2">
@@ -111,17 +112,17 @@
                             <div class="form-group">
                                 <label>Tipo de computador</label>
                                 <select type="text" name="machines[0][machine_type]" class="form-control">
-                                <option> </option>
-                                        <option value="{{ old('machine.0.machine_type', 'Notebook')}}">Notebook</option>
-                                        <option value="{{ old('machine.0.machine_type', 'Desktop')}}">Desktop</option>
+                                    <option> </option>
+                                    <option value="{{ old('machine.0.machine_type', 'Notebook') }}">Notebook</option>
+                                    <option value="{{ old('machine.0.machine_type', 'Desktop') }}">Desktop</option>
                                 </select>
                             </div>
-                        </div>    
+                        </div>
                         <div class="col 12 col-sm-2 ">
                             <div class="form-group">
                                 <label>Marca</label>
                                 <input type="text" name="machines[0][brand]" class="form-control"
-                                    value="{{ old('machine.0.brand')}}">
+                                    value="{{ old('machine.0.brand') }}">
                             </div>
                         </div>
                         <div class="col 12 col-sm-2">
@@ -131,56 +132,56 @@
                                     value="{{ old('machine.0.model', '') }}">
                             </div>
                         </div>
-                    </div>        
-                    <div class="row">                        
+                    </div>
+                    <div class="row">
                         <div class="col 12 col-sm-2">
                             <div class="form-group">
                                 <label>Número do serial</label>
-                                    <input type="text" name="machines[0][serial_number]" class="form-control"
-                                        value="{{ old('machine.0.serial_number', '') }}">
+                                <input type="text" name="machines[0][serial_number]" class="form-control"
+                                    value="{{ old('machine.0.serial_number', '') }}">
                             </div>
                         </div>
                         <div class="col 12 col-sm-2">
                             <div class="form-group">
                                 <label>Descrição</label>
-                                    <input type="text" name="machines[0][description]" class="form-control"
-                                        value="{{ old('machine.0.description', '') }}">                
+                                <input type="text" name="machines[0][description]" class="form-control"
+                                    value="{{ old('machine.0.description', '') }}">
                             </div>
-                        </div> 
+                        </div>
                         <div class="col 12 col-sm-2">
                             <div class="form-group">
                                 <label>Avarias físicas</label>
-                                    <input type="text" name="machines[0][breakdowns]" class="form-control"
-                                        value="{{ old('machine.0.breakdowns', '') }}">                         
+                                <input type="text" name="machines[0][breakdowns]" class="form-control"
+                                    value="{{ old('machine.0.breakdowns', '') }}">
                             </div>
                         </div>
                         {{-- <div style="display:nome">
                             <div class="form-group">
                                 <label>Id do cliente</label>
                                     {{-- <input type="text" name="machines[0][client_id]" class="form-control"
-                                        value="{{ old('machine.0.client_id', asset('/clients/create/'.$client_id->id)) }}">   --}}
-                                                            {{--colocar id que vem da URL  --}}
-                            {{-- </div>
+                                        value="{{ old('machine.0.client_id', asset('/clients/create/'.$client_id->id)) }}"> --}}
+                        {{-- colocar id que vem da URL --}}
+                        {{-- </div>
                         </div> --}}
-                    </div> 
-                    
-                    <div class="row" id="addMachine" style="display:none">                
+                    </div>
+
+                    <div class="row" id="addMachine" style="display:none">
                         <div class="row mt-2">
                             <div class="col-12 col-sm-3">
                                 <div class="form-group">
                                     <label>Tipo de computador</label>
                                     <select type="text" name="machines[1][machine_type]" class="form-control">
-                                    <option> </option>
-                                            <option value="{{ old('machine.1.machine_type', 'Notebook')}}">Notebook</option>
-                                            <option value="{{ old('machine.1.machine_type', 'Desktop')}}">Desktop</option>
+                                        <option> </option>
+                                        <option value="{{ old('machine.1.machine_type', 'Notebook') }}">Notebook</option>
+                                        <option value="{{ old('machine.1.machine_type', 'Desktop') }}">Desktop</option>
                                     </select>
                                 </div>
-                            </div>    
+                            </div>
                             <div class="col 12 col-sm-2 ">
                                 <div class="form-group">
                                     <label>Marca</label>
                                     <input type="text" name="machines[1][brand]" class="form-control"
-                                        value="{{ old('machine.1.brand')}}">
+                                        value="{{ old('machine.1.brand') }}">
                                 </div>
                             </div>
                             <div class="col 12 col-sm-2">
@@ -190,79 +191,78 @@
                                         value="{{ old('machine.1.model', '') }}">
                                 </div>
                             </div>
-                        </div>        
-                        <div class="row">                        
+                        </div>
+                        <div class="row">
                             <div class="col 12 col-sm-2">
                                 <div class="form-group">
                                     <label>Número do serial</label>
-                                        <input type="text" name="machines[1][serial_number]" class="form-control"
-                                            value="{{ old('machine.1.serial_number', '') }}">
+                                    <input type="text" name="machines[1][serial_number]" class="form-control"
+                                        value="{{ old('machine.1.serial_number', '') }}">
                                 </div>
                             </div>
                             <div class="col 12 col-sm-2">
                                 <div class="form-group">
                                     <label>Descrição</label>
-                                        <input type="text" name="machines[1][description]" class="form-control"
-                                            value="{{ old('machine.1.description', '') }}">                
+                                    <input type="text" name="machines[1][description]" class="form-control"
+                                        value="{{ old('machine.1.description', '') }}">
                                 </div>
-                            </div> 
+                            </div>
                             <div class="col 12 col-sm-2">
                                 <div class="form-group">
                                     <label>Avarias físicas</label>
-                                        <input type="text" name="machines[1][breakdowns]" class="form-control"
-                                            value="{{ old('machine.1.breakdowns', '') }}">                         
+                                    <input type="text" name="machines[1][breakdowns]" class="form-control"
+                                        value="{{ old('machine.1.breakdowns', '') }}">
                                 </div>
                             </div>
-                        </div>           
-                    </div>
-                    <div>
-                        <button type="button" class="btn bg-light text-secondary" onclick="add_div('addMachine')">Adicionar computador</button>
-                    </div>      
-            </div>
-
-            <div class="card-footer text-right"> 
-                <button type="submit" class="btn btn-success">Enviar</button>
-            </div>
-
-        </div>
-    </form>    
-</div>
-
-<div class="col-12">
-        
-    <form action="{{ route('client.import') }}" method="POST" enctype="multipart/form-data">
-
-        @csrf
-
-        <div class="card">
-            <div class="card-header">
-                Importar arquivo CSV
-            </div>
-            <div class="card-body">
-
-                <div class="row">
-
-                    <div class="col-12">
-                        <div class="form-group">
-                            <input name="file" type="file" class="custom-file-input" id="file-input">
-                            <label class="custom-file-label text-black-50" for="file-input" data-browse="Procurar">
-                                Procurar
-                            </label>
                         </div>
                     </div>
+                    <div>
+                        <button type="button" class="btn bg-light text-secondary" onclick="add_div('addMachine')">Adicionar
+                            computador</button>
+                    </div>
+                </div>
 
+                <div class="card-footer text-right">
+                    <button type="submit" class="btn btn-success">Enviar</button>
                 </div>
 
             </div>
-            <div class="card-footer text-right">
-                <button type="submit" class="btn btn-success">Importar</button>           
-            </div>
+        </form>
+    </div>
 
-        </div>
-    </form>
-</div>
+    <div class="col-12 mt-4">
+
+        <form action="{{ route('clients.import') }}" method="POST" enctype="multipart/form-data">
+
+            @csrf
+
+            <div class="card">
+                <div class="card-header">
+                    Importar arquivo CSV
+                </div>
+                <div class="card-body">
+
+                    <div class="row">
+
+                        <div class="col-12">
+                            <div class="form-group">
+                                <input name="file" type="file" class="custom-file-input" id="file-input">
+                                <label class="custom-file-label text-black-50" for="file-input" data-browse="Procurar">
+                                    Procurar
+                                </label>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="card-footer text-right">
+                    <button type="submit" class="btn btn-success">Importar</button>
+                </div>
+
+            </div>
+        </form>
+    </div>
 
 
 @endsection
-
-    

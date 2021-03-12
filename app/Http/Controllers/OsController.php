@@ -79,6 +79,7 @@ class OsController extends Controller
      */
     public function create($client_id)
     {
+        
         $client = Client::find($client_id);
         // dd($client);        
         $machines = Machine::where('client_id', $client_id)->get();
@@ -94,16 +95,16 @@ class OsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {             
-        // quatro campos não vem da view
+    public function store(Request $request){  
+        
         $orderService = new Os;
         $orderService -> user_id    = (string)$request->user_id;
         $orderService -> client_id  = (string)$request->client_id;
-        $orderService -> machine_id = (string)$request->machine_id;
-        $orderService -> status     = 'teste';
+        $orderService -> machine_id = $request->machine_id;
+        $orderService -> status     = (string)$request->status;
         $orderService -> service_id = (string)$request->service_id;
-        $orderService -> service    = $request->service;
+        // $orderService -> service    = (string)$request->service;
+        return $orderService;
         $orderService->save();
         
         return redirect()

@@ -37,7 +37,7 @@
                         <div class="col-12 col-sm-2">
                             <div class="form-group">
                                 <label>Telefone</label>
-                                <input type="text" name="client[fone]" class="form-control"
+                                <input type="text" name="client[fone]" class="form-control" id="fone"
                                 value="{{old('client.fone', $client->fone)}}">
                             </div>
                         </div>
@@ -102,25 +102,20 @@
                         </div>
                     </div>                                    
             </div>
-            <div class="card-footer text-right">
+            {{-- <div class="card-footer text-right">
                 <button type="submit" class="btn btn-success">Enviar</button>    
-            </div>
-        </div>
-    </form>    
+            </div> --}}
+        </div>      
 </div>
 
 <div class="col-12 mt-4">
-    <form action="{{ route('machines.update', $client->id) }}" method="POST"> 
+    
         <div class="card">
 
             <div class="card-header">
                 <h6>Edição de Computadores</h6>
             </div> 
                 
-            @csrf<!--tolken-->
-            @method('PUT'){{-- converte POS em PUT para o Laravel --}}
-            
-
             <div calss="card-body">
                 @foreach ($client->machines as $key => $machine) 
                     <div class="col-12 bg-light">        
@@ -178,10 +173,16 @@
                     </div>    
                 @endforeach
 
-                <div class="col-12 bg-light">     
+                {{-- <div class="col-12 bg-light">     
+
+                    @foreach ($client->machines as $key => $machine) 
+                        
+                    @endforeach
+
                     <?php 
-                        $newMachinekey = count($client->machines);
+                        $newMachinekey  =+ count($client->machines);
                     ?>   
+
                     <div class="row mt-2">
                         <div class="col-12 col-sm-3">
                             <div class="form-group">
@@ -190,8 +191,8 @@
                                     value="{{$machine->id}}">
                                 <select type="text" name="machines[{{$newMachinekey}}][machine_type]" class="form-control">                        
                                     <option value="">{{ old('machine.$newMachinekey.machine_type', '')}}</option>
-                                    <option value="{{ old('machine.$newMachinekey.machine_type', 'Notebook')}}">Notebook</option>{{--Verificar retorno null--}}
-                                    <option value="{{ old('machine.$newMachinekey.machine_type', 'Desktop')}}">Desktop</option>{{--Verificar--}}
+                                    <option value="{{ old('machine.$newMachinekey.machine_type', 'Notebook')}}">Notebook</option>
+                                    <option value="{{ old('machine.$newMachinekey.machine_type', 'Desktop')}}">Desktop</option>
                                 </select>
                             </div>
                         </div>    
@@ -233,7 +234,7 @@
                             </div>
                         </div>
                     </div> 
-                </div>
+                </div> --}}
             </div>
             <div class="card-footer text-right">
                 <button type="submit" class="btn btn-success">Enviar</button>    

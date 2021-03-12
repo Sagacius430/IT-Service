@@ -1,11 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\{Client,Machine};
 use App\Http\Requests\{ClientRequest, MachineRequest};
-use Illuminate\Http\Request;
 use Facade\FlareClient\Http\Client as HttpClient;
-use GuzzleHttp\Client as GuzzleHttpClient;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 
@@ -31,12 +31,15 @@ class MachineController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Client $client)
+    public function create($client_id)
     {
-
-        $machines = Machine::paginate(5);     
-
-        return view('machines.create', compact('machines', 'client'));
+        $client = CLient::findOrFail($client_id);
+        
+        // $machine = Machine::where('Client_id', $client_id)->get();  
+        $machines = Machine::all();   
+        
+        
+        return view('machines.create', compact('client', 'machines'));
     }    
 
     /**
@@ -47,12 +50,26 @@ class MachineController extends Controller
      */
     public function store(Request $request)
     {           
+        return $request;
         DB::beginTransaction();
 
         try{
+            $client = Client::findOrFail($request);
+            // return $client;
+            $machineClient = new Machine;
+            $machineClient -> machine_type  = $request->machin_type;
+            $machineClient -> brand         = $request->brand;
+            $machineClient -> model         = $request->model;
+            $machineClient -> serial_number = $request->serial_number;
+            $machineClient -> description   = $request->description;
+            $machineClient -> breakdowns    = $request->breakdowns;
+            $machineClient -> client_id     = $request->client_id;
             
-            $machine = Machine::create($request['machine']);
+            return $machineClient;
+            $machineClient->save();
+            Machine::create($request->all());
 
+            
             DB::commit();
 
         } catch(\Exception $e){
@@ -104,7 +121,7 @@ class MachineController extends Controller
      */
     public function update(Request $request, Client $client)
     {
-        
+        return $request;
         DB::beginTransaction();
         try{
             

@@ -18,4 +18,4 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
-Route::resource('clients', 'API\ClientCOntroller');
+Route::resource('clients', 'API\ClientController');

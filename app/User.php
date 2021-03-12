@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Notifications\ResetPassword;
 
+
 class User extends Authenticatable
 {
     use SoftDeletes;
@@ -70,4 +71,5 @@ class User extends Authenticatable
         
         return $this->hasMany('App\Os');
     }
+
 }
