@@ -130,11 +130,11 @@
                                 <div class="row align-items-end">
                                     <div class="col-12 col-sm-4">
                                         <label>Data inicial</label>
-                                        <input type="text" name="date_start" class="form-control" id="date">
+                                        <input type="date" name="date_start" class="form-control">
                                     </div>
                                     <div class="col-12 col-sm-4">
                                         <label>Data final</label>
-                                        <input type="text" name="date_end" class="form-control" id="date">
+                                        <input type="date" name="date_end" class="form-control">
                                     </div>
                                     <div class="col-12 col-sm-4">
                                         <button type="submit" class="btn btn-success">Gerar relatório</button>
@@ -156,11 +156,11 @@
                                 <div class="row align-items-end">
                                     <div class="col-12 col-sm-4">
                                         <label>Data inicial</label>
-                                        <input type="text" name="date_start" class="form-control" id="date">
+                                        <input type="date" name="date_start" class="form-control" >
                                     </div>
                                     <div class="col-12 col-sm-4">
                                         <label>Data final</label>
-                                        <input type="text" name="date_end" class="form-control" id="date">
+                                        <input type="date" name="date_end" class="form-control" >
                                     </div>
                                     <div class="col-12 col-sm-4">
                                         <button type="submit" class="btn btn-success">Gerar relatório</button>

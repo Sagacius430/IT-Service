@@ -19,16 +19,16 @@
 
         <div class="card-body">
 
-            <div class="card mt-4">
+            {{-- <div class="card mt-4">
                 <div class="card-body">
                     <div class="col-12 table-responsive">
-                        <div>Nome</div>
-                        <div><input id="name"/></div>
+                        <div>Nome </div>
+                        <div><input id="name"/> <i class="fas fa-search"></i></div>
                     </div>
                 </div>
-            </div>
+            </div> --}}
 
-            <div class="row mt-4">            
+            <div class="row mt-3">            
                 <div class="col-12 table-responsive">
                     <table class="table table-hover">
                         <thead class="table-primary">

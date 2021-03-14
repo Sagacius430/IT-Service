@@ -1,3 +1,4 @@
+//sujetão de correção e email
 jQuery(function($){
 
     var domains = ['msn.com','qq.com', 'sky.com', 'icloud.com','mac.com', 'googlemail.com',
@@ -42,7 +43,7 @@ $(document).ready(function(){
         // $("#name").mask("aaaaaaaaaaaaaaaa", options)        
         $("#fone").mask("(00) 0 0000-0000")
         $("#number").mask("0#") 
-        $("#date").mask('00/00/0000');                  
+        $(".date").mask('00/00/0000');                  
         $("#uf").mask("UU",{
             translation: {
                 'U': {pattern: /[A-Z]/}
@@ -131,40 +132,40 @@ $(document).ready(function(){
         //     document.getElementById(el).style.display = 'none' 
     } 
 
-    // Teste para filto da tabela
-    $(document).ready( function () {
+    // // Teste para filto da tabela
+    // $(document).ready( function () {
     
 
-        $('#providerTable').DataTable({
-            "language": {
-              "sEmptyTable": "Nenhum registro encontrado",
-              "sInfo": "Exibindo de _START_ até _END_ de _TOTAL_ registros",
-              "sInfoEmpty": "Mostrando 0 até 0 de 0 registros",
-              "sInfoFiltered": "(Filtrados de _MAX_ registros)",
-              "sInfoPostFix": "",
-              "sInfoThousands": ".",
-              "sLengthMenu": "Resultados por página: _MENU_ ",
-              "sLoadingRecords": "Carregando...",
-              "sProcessing": "Processando...",
-              "sZeroRecords": "Nenhum registro encontrado",
-              "sSearch": "Pesquisar",
-              "oPaginate": {
-                  "sNext": "Próximo",
-                  "sPrevious": "Anterior",
-                  "sFirst": "Primeiro",
-                  "sLast": "Último"
-              },
-              "oAria": {
-                  "sSortAscending": ": Ordenar colunas de forma ascendente",
-                  "sSortDescending": ": Ordenar colunas de forma descendente"
-              },
-              "select": {
-                  "rows": {
-                      "_": "Selecionado %d linhas",
-                      "0": "Nenhuma linha selecionada",
-                      "1": "Selecionado 1 linha"
-                  }
-              }
-            },
-          });
-      });
+    //     $('#providerTable').DataTable({
+    //         "language": {
+    //           "sEmptyTable": "Nenhum registro encontrado",
+    //           "sInfo": "Exibindo de _START_ até _END_ de _TOTAL_ registros",
+    //           "sInfoEmpty": "Mostrando 0 até 0 de 0 registros",
+    //           "sInfoFiltered": "(Filtrados de _MAX_ registros)",
+    //           "sInfoPostFix": "",
+    //           "sInfoThousands": ".",
+    //           "sLengthMenu": "Resultados por página: _MENU_ ",
+    //           "sLoadingRecords": "Carregando...",
+    //           "sProcessing": "Processando...",
+    //           "sZeroRecords": "Nenhum registro encontrado",
+    //           "sSearch": "Pesquisar",
+    //           "oPaginate": {
+    //               "sNext": "Próximo",
+    //               "sPrevious": "Anterior",
+    //               "sFirst": "Primeiro",
+    //               "sLast": "Último"
+    //           },
+    //           "oAria": {
+    //               "sSortAscending": ": Ordenar colunas de forma ascendente",
+    //               "sSortDescending": ": Ordenar colunas de forma descendente"
+    //           },
+    //           "select": {
+    //               "rows": {
+    //                   "_": "Selecionado %d linhas",
+    //                   "0": "Nenhuma linha selecionada",
+    //                   "1": "Selecionado 1 linha"
+    //               }
+    //           }
+    //         },
+    //       });
+    //   });

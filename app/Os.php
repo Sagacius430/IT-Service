@@ -18,7 +18,8 @@ class Os extends Model
         'finish',
         'user_id',
         'client_id',
-        'machines_id',
+        'machine_id',
+        'service_id',
     ];
 
     public function users(){

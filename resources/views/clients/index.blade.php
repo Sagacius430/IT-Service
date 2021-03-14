@@ -93,11 +93,11 @@
                 <div class="row align-items-end">
                     <div class="col-12 col-sm-3">
                         <label>Data inicial</label>
-                        <input type="text" name="date_start" class="form-control" id="date">
+                        <input type="text" name="date_start" class="form-control date" required>
                     </div>
                     <div class="col-12 col-sm-3">
                         <label>Data final</label>
-                        <input type="text" name="date_end" class="form-control" id="date">
+                        <input type="text" name="date_end" class="form-control date" required>
                     </div>
                     <div class="col-12 col-sm-3">
                         <label>Tipo de arquivo de exportação</label>
@@ -116,3 +116,25 @@
 </div>
 
 @endsection                       
+<script>
+    function validaData (e) {
+        var divisor = '/'
+        var data = e.value
+        var dataAtual = ''
+        if (data.match (/^(0[1-9]|[12][0-9]|3[01]).?(0[1-9]|1[012]).?([12][0-9]{3}|[0-9]{2})$/)) {
+        data = data.replace (/[^0-9]/g, '')
+        dataAtual = data.substr(0,2)+divisor+data.substr(2,2)+divisor
+        if ( data.substr (4).length == 4 ) dataAtual += data.substr (4)
+        else dataAtual += (data.substr (4) > 30 ? '19' : '20') + data.substr (4)
+        }
+        if (dataAtual != '') {
+        x = dataAtual.split (divisor)
+        confere = new Date (x[2],x[1]-1,x[0])
+        confere2 = (confere.getDate () < 10 ? '0' : '') + confere.getDate ()
+        confere2 += divisor + ((confere.getMonth()+1) < 10 ? '0' : '') + (confere.getMonth()+1)
+        confere2 += divisor + confere.getFullYear()
+        if (confere2 != dataAtual) dataAtual = ''
+        }
+        e.value = dataAtual
+    }
+</script>

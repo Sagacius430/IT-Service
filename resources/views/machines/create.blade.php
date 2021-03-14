@@ -33,9 +33,11 @@
                                 <select type="text" name="machines[{{ $newMachinekey }}][machine_type]" size=1
                                     class="form-control">
                                     <option> </option>
-                                    <option value="{{ old('machine.$newMachinekey.machine_type', 'Notebook') }}">Notebook
+                                    <option value="{{ old('machine.$newMachinekey.machine_type', 'Notebook') }}">
+                                        Notebook
                                     </option>
-                                    <option value="{{ old('machine.$newMachinekey.machine_type', 'Desktop') }}">Desktop
+                                    <option value="{{ old('machine.$newMachinekey.machine_type', 'Desktop') }}">
+                                        Desktop
                                     </option>
                                 </select>
                             </div>
@@ -87,6 +89,8 @@
                                 <label></label>
                                 <input type="hidden" name="machines[{{ $newMachinekey }}][client_id]" class="form-control"
                                     value="{{$client->id}}">
+                                {{-- <input type="hidden" name="client[id]" class="form-control"
+                                    value="{{$client->id}}"> --}}
                                     
                             </div>
                         </div>

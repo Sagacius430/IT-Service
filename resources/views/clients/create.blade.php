@@ -13,7 +13,7 @@
 @section('content')
 
     <div class="col-12">
-        <form action="{{ route('clients.store') }}" method="POST">
+        <form action="{{ route('clients.store') }}" method="POST" enctype="multipart/form-data">
             <div class="card">
 
                 <div class="card-header">

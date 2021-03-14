@@ -50,7 +50,7 @@ class ClientController extends Controller
 
         // $clientId['id'] = $client->id;
         // Machine::create($clientId);
-            
+            return $request;
         DB::beginTransaction();
 
         try{
@@ -218,25 +218,22 @@ class ClientController extends Controller
     // }
 
     public function export(Request $request){
+       
+        $dateStart = Carbon::parse(date('yy-m-d', strtotime($request->date_start)))->startOfDay();
+        $dateEnd = Carbon::parse(date('yy-m-d', strtotime($request->date_end)))->startOfDay();
+        
+        if($dateStart >= '2020-01-12'){
+            $dateStart = Carbon::parse('2020-01-12T00:00:00.000000Z');
+        }       
         
 
-        if($request->dateStart == '2020-01-01'){
-            $dateStart = Carbon::parse('1982-06-09');
-        }       
-
-        if($request->dateEnd == ''){
+        if($dateEnd >= '2020-01-12'){
             $dateEnd = Carbon::now();
         }
-
-        $dateStart = Carbon::parse($request->date_start)->startOfDay();
-        $dateEnd = Carbon::parse($request->date_end)->endOfDay();
+        
         $exportFileType = $request->export_file_type;
         
         
-        
-
-        // dd($dateStart);
-
         return Excel::download( new clientExport($dateStart, $dateEnd), 'Clients.'.$exportFileType);
 
     }

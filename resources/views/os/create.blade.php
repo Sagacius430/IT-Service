@@ -29,7 +29,7 @@
                         <div class="col 12 col-sm-2 ">
                             <div class="form-group">
                                 <label>Resposável:</label>
-                                <input type="text" name="os[user_id]" class="form-control" id="name" disabled="disabled"
+                                <input type="text" name="user_id" class="form-control" id="name" disabled="disabled"
                                     value="{{ auth()->user()->name }}">
                                 <input type="hidden" name="user_id"
                                     value="{{auth()->user()->id }}">            
@@ -42,7 +42,7 @@
                         <div class="col 12 col-sm-2 ">
                             <div class="form-group">
                                 <label>Cliente:</label>
-                                    <input type="text" name="os[client_id]" class="form-control" id="id" disabled="disabled" 
+                                    <input type="text" name="client_id" class="form-control" id="id" disabled="disabled" 
                                         value="{{$client->name }}">
                                     <input type="hidden" name="client_id"
                                         value="{{$client->id}}">
@@ -52,7 +52,7 @@
                         <div class="col 12 col-sm-2 ">
                             <div class="form-group">
                                 <label>Computador</label>
-                                <select type="text" name="os[machine_id]" size=1 class="form-control">
+                                <select type="text" name="machine_id" size=1 class="form-control">
                                     <option> </option>
                                     @foreach ($machines as $machine)
                                         <option {{--{{old('os[machine_id]','') == $machine->id ? 'selected':''}}--}} 
@@ -70,11 +70,11 @@
                         <div class="col 12 col-sm-2 ">
                             <div class="form-group">
                                 <label>Status</label>                                                   
-                                    <select type="text" name="os[status]" size=1 class="form-control">
+                                    <select type="text" name="status" size=1 class="form-control">
                                         <option> </option>
-                                        <option value="{{old('os[status]', 'Aguardando serviço')}}">Aguardando serviço</option>
-                                        <option value="{{old('os[status]', 'Em manutenção')}}">Em manutenção</option>
-                                        <option value="{{old('os[status]', 'Aguardando peça')}}">Aguardando peça</option>
+                                        <option {{old('status','') == 'Aguardando serviço' ? 'selected' : '' }} value="Aguardando serviço">Aguardando serviço</option>
+                                        <option {{old('status','') == 'Em manutenção' ? 'selected' : ''}} value="Em manutenção">Em manutenção</option>
+                                        <option {{old('status','') =='Aguardando peça' ? 'selected' : ''}} value="Aguardando peça">Aguardando peça</option>
                                         {{-- <option value="{{ old('os.status', 'Devolvido')}}">Devolvido</option>
                                         <option value="{{ old('os.status', 'Finalizado')}}">Finalizado</option> --}}
                                     </select>
@@ -86,7 +86,7 @@
                                 <label>Serviço</label>
                                 {{-- <input type="hidden" name="service[0][id]" size=1 class="form-control"> 
                                 lembrar de inserir o id em service_id--}}
-                                <select type="text" name="os[service_id]" size=1 class="form-control">
+                                <select type="text" name="service_id" size=1 class="form-control">
                                 {{-- {{$services->id}} --}}
                                     <option> </option>
                                     @foreach ($services as $service) 
@@ -125,5 +125,40 @@
             </div>        
         </div>
     </form>
+</div>
+<div class="col-12 mt-4">
+    <div class="card">
+        
+        <div class="card-header">
+            Ordens de serviço cadastrados para cliente {{$client->name}}      
+        </div>
+<div class="card-body">
+    <div class="row">
+        <div class="col 12">
+            <table class="table table-hover">
+                <thead class="table-primary">
+                    <th class="align-middle">Serviço</th>
+                    <th class="align-middle">Status</th>
+                </thead>
+                <tbody>
+                    @foreach ($client->os as $o)
+                        <tr>                            
+                            <td>
+                            @foreach ($services as $service)
+                                @if ($service->id == $o->service_id)
+                                    {{$service->name}}
+                                @endif
+                            @endforeach   
+                            </td>
+                            <td>{{ $o->status }}</td>
+                                              
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</div>
 </div>
 @endsection

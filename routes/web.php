@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\OsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -95,7 +96,9 @@ Route::middleware('auth')->group(function(){
     Route::get('/os/{client_id}/edit', 'OsController@edit')->name('os.edit');
     Route::post('/os', 'OsController@store')->name('os.store');
     Route::put('/os/{id}', 'OsController@update')->name('os.update');
-    Route::delete('/os/{id}', 'osController@destroy')->name('os.destroy');   
+    Route::delete('/os/{id}', 'osController@destroy')->name('os.destroy');
+    
+    // Route::get('os', 'OsController@status')->name('os.status');
     
     // Route::resource('os','osController');
 });

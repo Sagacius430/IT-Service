@@ -3,10 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\{Client, Os, User};
-use App\Machine;
+use App\{Client, Os, User, Machine};
 use Carbon\Carbon;
-use PhpParser\Node\Stmt\Return_;
 
 class ReportController extends Controller
 {
@@ -18,23 +16,42 @@ class ReportController extends Controller
      */
     public function generateClientsReport(Request $request)
     {
-        $clients = new Client;        
+        $clients = new  Client;
+        $machines = new Machine;
+
+        $dateStart = Carbon::parse($request->date_start)->startOfDay();
+        $dateEnd = Carbon::parse($request->date_end)->endOfDay();
 
         //selecionar intervalo de data
-        if ($request->date_start != '') {
-            $dateStart = Carbon::parse($request->date_start)->startOfDay();
-            $clients = $clients->where('created_at', '>=', $dateStart);
-        }
+        if (strtotime($request->date_start) > strtotime($request->date_end)) {
 
-        if ($request->date_end != '') {
-            $dateEnd = Carbon::parse($request->date_end)->endOfDay();
-            $clients = $clients->where('created_at', '<=', $dateEnd);
+            return back()->with('msg_error', 'Data inicial maior que data final para o relatório de clientes.');
+        } else {
+
+            //selecionar intervalo de data
+            if ($request->date_start != '') {
+
+                $clients = $clients->where('created_at', '>=', $dateStart);
+            } else {
+
+                $dateStartSystem = Carbon::parse('2020-01-12T00:00:00.000000Z');
+                $clients = $clients->where('created_at', '>=', $dateStartSystem);
+            }
+
+            if ($request->date_end != '') {
+
+                $clients = $clients->where('created_at', '<=', $dateEnd);
+            } else {
+
+                $dateNow = Carbon::now();
+                $clients = $clients->where('created_at', '<=', $dateNow);
+            }
         }
 
         $clients = $clients->get();
-        $machines = new Machine;
+        $machines = $machines->get();
 
-        return view('reports.clients', compact('clients','machines'));
+        return view('reports.clients', compact('clients', 'machines'));
     }
 
     /**
@@ -44,20 +61,38 @@ class ReportController extends Controller
      */
     public function generateOsReport(Request $request)
     {
-        $os = new Os;  
-        $clients = new Client;  
-        $users = new User;    
+        $os = new Os;
+        $clients = new Client;
+        $users = new User;
 
-        //selecionar intervalo de data
-        if ($request->date_start != '') {
-            $dateStart = Carbon::parse($request->date_start)->startOfDay();
-            $os = $os->where('created_at', '>=', $dateStart);
+
+        $dateStart = Carbon::parse($request->date_start)->startOfDay();
+        $dateEnd = Carbon::parse($request->date_end)->endOfDay();
+
+        if (strtotime($request->date_start) > strtotime($request->date_end)) {
+
+            return back()->with('msg_error', 'Data inicial maior que data final para o relatório de ordem de serviço.');
+        } else {
+            //selecionar intervalo de data
+            if ($request->date_start != '') {
+
+                $os = $os->where('created_at', '>=', $dateStart);
+            } else {
+
+                $dateStartSystem = Carbon::parse('2020-01-12T00:00:00.000000Z');
+                $os = $os->where('created_at', '>=', $dateStartSystem);
+            }
+
+            if ($request->date_end != '') {
+
+                $os = $os->where('created_at', '<=', $dateEnd);
+            } else {
+
+                $dateNow = Carbon::now();
+                $os = $os->where('created_at', '<=', $dateNow);
+            }
         }
 
-        if ($request->date_end != '') {
-            $dateEnd = Carbon::parse($request->date_end)->endOfDay();
-            $os = $os->where('created_at', '<=', $dateEnd);
-        }
 
         $os      = $os->get();
         $clients = $clients->get();
