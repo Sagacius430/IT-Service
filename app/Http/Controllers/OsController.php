@@ -178,8 +178,9 @@ class OsController extends Controller
         DB::beginTransaction();
         try{
             $order = Os::findOrFail($id);
-            
+            return $request;
             $order->update($request['os']);
+            $order->update($request->procedures);
             return $order;
             // $order->update($request->all());
 

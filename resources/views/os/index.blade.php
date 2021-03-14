@@ -123,12 +123,12 @@
 
             <div class="card-body">
 
-                @yield('select')
+                {{-- @yield('select')
                 @section('select')
                     
-                @endsection
+                @endsection --}}
                 <div class="row">
-                    <div class="col-12">                    
+                    <div class="col-12">
 
                         <table class="table table-hover" id="tableIndex">
                             <thead class="table-primary">
@@ -139,7 +139,7 @@
                                 {{-- <th class="align-middle">Garantia</th>
                             <th class="align-middle">Finalizado</th> --}}
                                 <th class="align-middle">Técnico</th>
-                                <th class="align-middle" colspan="2">Ações</th>
+                                <th class="align-middle" colspan="3">Ações</th>
                             </thead>
 
                             <tbody>
@@ -180,6 +180,13 @@
                                                 </button>
                                             </form>
                                         </td>
+                                        <td>
+                                            <p><a href="{{ route('reports.detailOs', $order->id) }}" method="GET">                                                    
+                                                    Detalhes                                                    
+                                                </a>
+                                            </p>
+                                        </td>
+                                        
                                     </tr>
                                 @endforeach
                             </tbody>

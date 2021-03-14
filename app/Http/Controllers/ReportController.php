@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\{Client, Os, User, Machine};
+use App\{Client, Os, User, Machine, Service};
 use Carbon\Carbon;
 
 class ReportController extends Controller
@@ -100,4 +100,22 @@ class ReportController extends Controller
 
         return view('reports.os', compact('os', 'clients', 'users'));
     }
+
+    public function generateDetailOsReport(Request $request)
+    {
+        $order = Os::where('id', '==', $request);
+        $teste = $request;
+        $client = new Client;
+        $user = new User;
+        $machine = new Machine;
+        $service = new Service;
+
+        // $client = $client->where('name', '==', $os->client_id);
+
+        $os = $order->get();
+
+        return view('reports.detailOs', compact('order', 'client', 'user', 'machine', 'service'));
+
+    }
+
 }

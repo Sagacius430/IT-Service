@@ -55,6 +55,7 @@ Route::middleware('auth')->group(function(){
     // Relatórios Clientes Ordem de serviço
     Route::get('reports/clients', 'ReportController@generateClientsReport')->name('reports.clients');
     Route::get('reports/os', 'ReportController@generateOsReport')->name('reports.os');
+    Route::get('reports/detailOs', 'ReportController@generateDetailOsReport')->name('reports.detailOs');
     
     //usuários
     Route::resource('users', 'UserController')->middleware('auth');
@@ -97,6 +98,7 @@ Route::middleware('auth')->group(function(){
     Route::post('/os', 'OsController@store')->name('os.store');
     Route::put('/os/{id}', 'OsController@update')->name('os.update');
     Route::delete('/os/{id}', 'osController@destroy')->name('os.destroy');
+    
     
     // Route::get('os', 'OsController@status')->name('os.status');
     
