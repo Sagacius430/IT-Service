@@ -102,6 +102,9 @@ Route::middleware('auth')->group(function(){
     
     // Route::get('os', 'OsController@status')->name('os.status');
     
-    // Route::resource('os','osController');
+    Route::get('/stats-today', 'StatisticsController@ordersToday');
+    Route::get('/stats-month', 'StatisticsController@ordersInMonth');
+    Route::get('/stats-year', 'StatisticsController@ordersInYear');
+    Route::get('/stats/{column}/{date?}/{limit?}', 'StatisticsController@columnStats');
 });
 
