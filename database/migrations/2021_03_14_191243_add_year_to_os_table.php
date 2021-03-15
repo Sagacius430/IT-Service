@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddServiceIdToOsTable extends Migration
+class AddYearToOsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,11 @@ class AddServiceIdToOsTable extends Migration
      */
     public function up()
     {
-        Schema::table('os', function (Blueprint $table) {            
-
-            $table->unsignedBigInteger('service_id');
-            $table->foreign('service_id')->references('id')->on('services');
+        Schema::table('os', function (Blueprint $table) {
+            $table->smallInteger('year');
+            $table->smallInteger('month');
+            $table->smallInteger('day');
+            $table->smallInteger('hour');
         });
     }
 
@@ -28,7 +29,10 @@ class AddServiceIdToOsTable extends Migration
     public function down()
     {
         Schema::table('os', function (Blueprint $table) {
-            $table->drop('service_id');
+            $table->drop('year');
+            $table->drop('month');
+            $table->drop('day');
+            $table->drop('hour');
         });
     }
 }

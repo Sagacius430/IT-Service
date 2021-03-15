@@ -35,7 +35,13 @@
                                         @endif
                                     @endforeach
                                 </td>
-                                <td>{{$order->service}}</td>
+                                <td>
+                                    @if ($order->service == null)
+                                        <label>Ainda não realizado</label>
+                                    @else
+                                        {{$order->service}}
+                                    @endif
+                                </td>
                                 <td>{{$order->status}}</td>
                                 {{-- <td>{{$order->finish}}</td> --}}
                                 <td>

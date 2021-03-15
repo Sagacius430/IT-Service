@@ -169,7 +169,7 @@
                                                 Editar
                                             </a>
                                         </td>
-                                        <td>
+                                        {{-- <td>
                                             <form action="{{ route('os.destroy', $order->id) }}" method="POST">
 
                                                 @csrf
@@ -179,14 +179,12 @@
                                                     Apagar
                                                 </button>
                                             </form>
+                                        </td> --}}
+                                        <td>                                           
+                                            <a  href="{{ route('reports.detailOs', $order->id) }}">                                                    
+                                                Detalhes                                                    
+                                            </a>
                                         </td>
-                                        <td>
-                                            <p><a href="{{ route('reports.detailOs', $order->id) }}" method="GET">                                                    
-                                                    Detalhes                                                    
-                                                </a>
-                                            </p>
-                                        </td>
-                                        
                                     </tr>
                                 @endforeach
                             </tbody>

@@ -146,10 +146,17 @@ class UserController extends Controller
      */
     public function destroy($id)
     {        
-        $user = User::findOrFail($id);
-        $user->delete();
-
+        try{
+            $user = User::findOrFail($id);
+            $user->delete();
+        }Catch(\Exception $exception){
+            DB::rollback();
+            return back()
+                ->with('msg_error','Erro no servidor ao excluir usuário');
+        }
+        
         return redirect()
-            ->route('users.index');
+            ->route('users.index')
+            ->with('msg_success', 'Usuário excluido!');
     }
 }

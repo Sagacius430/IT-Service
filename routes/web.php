@@ -55,12 +55,11 @@ Route::middleware('auth')->group(function(){
     // Relatórios Clientes Ordem de serviço
     Route::get('reports/clients', 'ReportController@generateClientsReport')->name('reports.clients');
     Route::get('reports/os', 'ReportController@generateOsReport')->name('reports.os');
-    Route::get('reports/detailOs', 'ReportController@generateDetailOsReport')->name('reports.detailOs');
+    Route::get('reports/{id}/detailOs', 'ReportController@generateDetailOsReport')->name('reports.detailOs');
     
     //usuários
     Route::resource('users', 'UserController')->middleware('auth');
-
-
+    
 
     //Clientes
     Route::get('clients', 'ClientController@index')->name('clients.index');

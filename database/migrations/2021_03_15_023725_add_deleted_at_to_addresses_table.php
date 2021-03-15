@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddServiceIdToOsTable extends Migration
+class AddDeletedAtToAddressesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,8 @@ class AddServiceIdToOsTable extends Migration
      */
     public function up()
     {
-        Schema::table('os', function (Blueprint $table) {            
-
-            $table->unsignedBigInteger('service_id');
-            $table->foreign('service_id')->references('id')->on('services');
+        Schema::table('addresses', function (Blueprint $table) {            
+                $table->softDeletes();  
         });
     }
 
@@ -27,8 +25,8 @@ class AddServiceIdToOsTable extends Migration
      */
     public function down()
     {
-        Schema::table('os', function (Blueprint $table) {
-            $table->drop('service_id');
+        Schema::table('addresses', function (Blueprint $table) {
+             $table->dropSoftDeletes();
         });
     }
 }

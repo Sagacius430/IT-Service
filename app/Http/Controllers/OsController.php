@@ -97,7 +97,7 @@ class OsController extends Controller
      */
     public function store(Request $request)
     {
-        // return $request->status;
+        
         $order = new Os;
         
         $order->user_id = $request->user_id;
@@ -109,6 +109,14 @@ class OsController extends Controller
         // dd($order);
 
         $order->save();
+
+        if ($order->created_at) {
+            $order->year = Carbon::now()->format('Y');
+            $order->month = Carbon::now()->format('m');
+            $order->day = Carbon::now()->format('d');
+            $order->hour = Carbon::now()->format('h');
+            $order->save();
+        }
 
 
         // DB::beginTransaction();
@@ -174,15 +182,22 @@ class OsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
         DB::beginTransaction();
         try{
             $order = Os::findOrFail($id);
-            return $request;
+            
             $order->update($request['os']);
-            $order->update($request->procedures);
-            return $order;
-            // $order->update($request->all());
+            if($order->status == 'Finalizado'){
+
+                $order->guarantee = Carbon::now()->addMonth(3)->format('Y-m-d');                    
+                $order->finish = Carbon::now();
+                $order->save(); 
+            }
+            if ($order->contacted == null) {
+                $order->contacted = true;
+                $order->save();
+            }
+            
 
             DB::commit();
         }catch(\Exception $exception){

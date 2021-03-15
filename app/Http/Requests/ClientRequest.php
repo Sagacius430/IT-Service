@@ -32,12 +32,12 @@ class ClientRequest extends FormRequest
             'address.district' =>['required'],
             'address.street'  =>['required'],
             'address.number'   =>['required'],
-            'machine.brand'         =>['required'],
-            'machine.model'         =>['required'],
-            'machine.serial_number' =>['required'],
-            'machine.machine_type'  =>['required'],
-            'machine.description'   =>['required'],
-            'machine.breakdowns'    =>['required'],
+            // 'machine.brand'         =>['required'],
+            // 'machine.model'         =>['required'],
+            // 'machine.serial_number' =>['required'],
+            // 'machine.machine_type'  =>['required'],
+            // 'machine.description'   =>['required'],
+            // 'machine.breakdowns'    =>['required'],
 
         ];        
     }
@@ -53,12 +53,12 @@ class ClientRequest extends FormRequest
             'address.district' =>'bairro',
             'address.streest'  =>'logradouro',
             'address.number'   =>'número',
-            'machine.brand'         =>'marca',
-            'machine.model'         =>'modelo',
-            'machine.serial_number' =>'número de série',
-            'machine.machine_type'  =>'yipo',
-            'machine.description'   =>'descrição',
-            'machine.breakdowns'    =>'avarias',
+            // 'machine.brand'         =>'marca',
+            // 'machine.model'         =>'modelo',
+            // 'machine.serial_number' =>'número de série',
+            // 'machine.machine_type'  =>'tipo',
+            // 'machine.description'   =>'descrição',
+            // 'machine.breakdowns'    =>'avarias',
         ];
     }
     

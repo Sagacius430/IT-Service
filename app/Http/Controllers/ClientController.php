@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\{Machine, Client};
+use App\{Address, Machine, Client};
 use App\Http\Requests\{ClientRequest, ExportRequest};
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -43,14 +43,14 @@ class ClientController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CLientRequest $request)
     {
         // $clientId = $request->all();
         // $client = Client::create($clientId);
 
         // $clientId['id'] = $client->id;
         // Machine::create($clientId);
-            return $request;
+            // return $request;
         DB::beginTransaction();
 
         try{
@@ -177,6 +177,20 @@ class ClientController extends Controller
     {
         try{
             $client = Client::findOrFail($id);
+            $client->address()->delete();
+            // $client->machine()->delete();
+            $machines = Machine::all();
+            foreach($machines as $machine){
+                if ($machine->client_id == $id) {
+                    $machine->delete();
+                }
+            }
+
+            // foreach($address as $data){
+            //     if($data->client_id == $client->id){
+            //         $address->delete();
+            //     }
+            // }
 
             $client->delete();
             // $client->address()->delete;
@@ -184,7 +198,7 @@ class ClientController extends Controller
 
             DB::rollback();
             return back()
-                ->with('msg_error','Erro no servidor ao atualizar cliente');
+                ->with('msg_error','Erro no servidor ao excluir cliente');
             
         }        
 

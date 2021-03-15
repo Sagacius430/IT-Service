@@ -60,7 +60,8 @@ class ReportController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function generateOsReport(Request $request)
-    {
+    {   
+        
         $os = new Os;
         $clients = new Client;
         $users = new User;
@@ -101,20 +102,15 @@ class ReportController extends Controller
         return view('reports.os', compact('os', 'clients', 'users'));
     }
 
-    public function generateDetailOsReport(Request $request)
+    public function generateDetailOsReport($id)
     {
-        $order = Os::where('id', '==', $request);
-        $teste = $request;
-        $client = new Client;
-        $user = new User;
-        $machine = new Machine;
-        $service = new Service;
+        $order = Os::findOrFail($id);        
+        $client = Client::findOrFail($order->client_id);
+        $machine =  Machine::findOrFail($order->machine_id);;
+        $service = Service::findOrFail($order->service_id);;
+        
 
-        // $client = $client->where('name', '==', $os->client_id);
-
-        $os = $order->get();
-
-        return view('reports.detailOs', compact('order', 'client', 'user', 'machine', 'service'));
+        return view('reports.detailOs', compact('order', 'client', 'machine', 'service'));
 
     }
 
