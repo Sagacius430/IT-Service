@@ -6,6 +6,7 @@
 
 @section('select')
 
+
     <div class="row">
         <table class="table table-hover">
             <thead class="table-primary">
@@ -65,3 +66,6 @@
     </div>
 
 @endsection
+    
+}
+  

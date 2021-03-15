@@ -29,7 +29,8 @@
                                         <div class="card-body">
                                             <div class="d-flex justify-content-between align-items-center alert-link"
                                                 onclick="shiftTable()">
-                                                <a class="nav-link" href="">
+                                                <a class="nav-link" href="#" data-toggle="modal" data-target="#moModal">
+                                                    <i class='fa fa-pencil'></i>
                                                     Aguardando serviço
                                                 </a>
                                                 <span class="h4">{{ $status['aguardando'] }}</span>
@@ -96,7 +97,7 @@
                                         <div class="card-footer d-flex align-items-center justify-content-between"></div>
                                         <div class="card-body">
                                             <div class="d-flex justify-content-between align-items-center alert-link">
-                                                Finalizado
+                                                    Finalizado
                                                 <span class="h4">{{ $status['finalizado'] }}</span>
                                             </div>
                                         </div>
@@ -112,7 +113,160 @@
 
         </div>
     </div>
+    {{-- ###############################Aguardando Serviço ##############################--}}
+    
+    <div class="modal fade bd-example-modal-xl" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel"
+        aria-hidden="true" id="moModal" role="dialog">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>{{$wait = 'Aguardando serviço'}}</h3>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <form method='post' action='' enctype="multipart/form-data">
+                        <input type="hidden" name="_token" value="">
+                        <div class="box-body">
+                            <div class="box-body">
+                                {{-- <div class='form-group col-sm-12'>                                    
+                                    <input type='text' class='form-control' name='name_facility' value='' required />
+                                </div> --}}
 
+                                <div class="row">
+                                    <table class="table table-hover">
+                                        <thead class="table-primary">                                   
+                                            <th class="align-middle">Cliente</th>
+                                            <th class="align-middle">Serviço</th>                                            
+                                            <th class="align-middle">Dias pendentes</th>{{-- tempo de OS aberta --}}                                            
+                                            <th class="align-middle">Técnico</th>
+                                            <th class="align-middle" colspan="2">Ações</th>
+                                        </thead>
+                                        <tbody>                                            
+                                            @foreach ($orders as $order)                                            
+                                                @if ($order->status == $wait )                                            
+                                                    <tr>                                                        
+                                                        <td>
+                                                            @foreach ($clients as $client)
+                                                                @if ($client->id == $order->client_id)
+                                                                    {{ $client->name }}
+                                                                @endif
+                                                            @endforeach
+                                                        </td>
+                                                        <td>{{ $order->service }}</td>
+                                                        
+                                                        <td>{{ $dateNow->diffInDays($order->created_at) }}</td>                                                       
+                                                        <td>
+                                                            @foreach ($users as $user)
+                                                                @if ($user->id == $order->user_id)
+                                                                    {{ $user->name }}
+                                                                @endif
+                                                            @endforeach
+                                                        </td>
+                                                        <td>
+                                                            <a class="btn alert-warning"
+                                                                href="{{ route('os.edit', $order->id) }}">
+                                                                Editar
+                                                            </a>
+                                                        </td>
+                                                        <td>
+                                                            <a href="{{ route('reports.detailOs', $order->id) }}">
+                                                                Detalhes
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                @endif
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+
+
+
+                            </div><!-- /.box -->
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{-- /Aguardando Serviço --}}
+
+    {{-- #############################Finalizado ###########################--}}
+
+    <div class="modal fade bd-example-modal-xl" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel"
+        aria-hidden="true" id="moModal" role="dialog">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <form method='post' action='' enctype="multipart/form-data">
+                        <input type="hidden" name="_token" value="">
+                        <div class="box-body">
+                            <div class="box-body">
+                                {{-- <div class='form-group col-sm-12'>
+                                    <label>Facilities</label>
+                                    <input type='text' class='form-control' name='name_facility' value='' required />
+                                </div> --}}
+
+                                <div class="row">
+                                    <table class="table table-hover">
+                                        <thead class="table-primary">
+                                            <th class="align-middle">Cliente</th>
+                                            <th class="align-middle">Serviço</th>
+                                            <th class="align-middle">Status</th>
+                                            <th class="align-middle">Dias</th>{{-- tempo de OS aberta --}}
+                                            <th class="align-middle">Garantia até</th>
+                                            <th class="align-middle">Técnico</th>
+                                            <th class="align-middle" colspan="2">Ações</th>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($orders as $order)
+                                                @if ($order->guarantee != null)
+                                                    <tr>
+                                                        <td>
+                                                            @foreach ($clients as $client)
+                                                                @if ($client->id == $order->client_id)
+                                                                    {{ $client->name }}
+                                                                @endif
+                                                            @endforeach
+                                                        </td>
+                                                        <td>{{ $order->service }}</td>
+                                                        <td>{{ $order->status }}</td>
+                                                        <td>{{ $dateNow->diffInDays($order->created_at) }}</td>
+                                                        <td>{{ $order->guarantee }}</td>
+                                                        <td>
+                                                            @foreach ($users as $user)
+                                                                @if ($user->id == $order->user_id)
+                                                                    {{ $user->name }}
+                                                                @endif
+                                                            @endforeach
+                                                        </td>
+                                                        <td>
+                                                            <a class="btn alert-warning"
+                                                                href="{{ route('os.edit', $order->id) }}">
+                                                                Editar
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                @endif
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+
+
+
+                            </div><!-- /.box -->
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- /Finalizado --}}
 
     <div class="col-12 mt-3">
         <div class="card">
@@ -132,6 +286,7 @@
 
                         <table class="table table-hover" id="tableIndex">
                             <thead class="table-primary">
+                                <th class="align-middle">Código</th>
                                 <th class="align-middle">Cliente</th>
                                 <th class="align-middle">Serviço</th>
                                 <th class="align-middle">Status</th>
@@ -145,6 +300,7 @@
                             <tbody>
                                 @foreach ($orders as $order)
                                     <tr>
+                                        <td>{{$order->id}}</td>
                                         <td>
                                             @foreach ($clients as $client)
                                                 @if ($client->id == $order->client_id)
@@ -180,9 +336,9 @@
                                                 </button>
                                             </form>
                                         </td> --}}
-                                        <td>                                           
-                                            <a  href="{{ route('reports.detailOs', $order->id) }}">                                                    
-                                                Detalhes                                                    
+                                        <td>
+                                            <a href="{{ route('reports.detailOs', $order->id) }}">
+                                                Detalhes
                                             </a>
                                         </td>
                                     </tr>
@@ -192,6 +348,7 @@
                     </div>
                 </div>
             </div>
+            {{-- {!! $orders->links() !!} --}}
         </div>
     </div>
 @endsection
@@ -208,5 +365,20 @@
     $(".js-example-theme-single").select2({
         theme: "classic"
     });
+
+    // $(document).ready(function(){
+    //     $(document).on ('click', '.view_data', function(){
+    //         var listOrders[] = $(this).attr("orders[]");
+    //         // alert(listOrders);
+    //         if(listOrders != ''){
+    //             var datas = {
+    //                  listOrders:listOrders
+    //             };
+    //             $.post('status.blade.php', datas, function(return){
+
+    //             });
+    //         }
+    //     });
+    // });
 
 </script>

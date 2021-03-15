@@ -155,7 +155,7 @@
 
                     </div>
                     <div>
-                        <button type="submit" class="btn btn-success">Enviar</button>
+                        <button type="submit" class="btn btn-success"><i class='fa fa-save'></i> Enviar</button>
                     </div>
                 </div>
             </div>

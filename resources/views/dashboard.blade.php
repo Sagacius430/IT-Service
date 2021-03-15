@@ -99,7 +99,10 @@
         <div class="col-xl-4 col-md-6">
             <div class="card bg-primary text-white mb-4" id="dashboard-card">
                 <div class="card-body" id="dashboard-card">
-                    Pendências
+                    <div class="d-flex justify-content-between align-items-center">
+                        Pendências
+                        <span class="h4">{{ $counts['waitPiece'] }}</span>
+                    </div>
                 </div>
                 <div class="card-footer d-flex align-items-center justify-content-between">
                     <a class="small text-white stretched-link" href="#">View Details</a>
@@ -111,40 +114,40 @@
 </div>
 
 {{-- <div class="row  mt-3"> --}}
-    <div class="col-md-12">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <h4 class="mt-2">Ordens de serviço</h4>
-                            </div>
-                            <div class="col-md-6">
-                                <ul class="nav nav-pills justify-content-end" id="pills-tab" role="tablist">
-                                    <li class="nav-item">
-                                        <a class="nav-link orders active" data-toggle="pill" id="orders_today" href="#"
-                                            role="tab" aria-controls="pills-home" aria-selected="true">Hoje</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link orders" data-toggle="pill" id="orders_month" href="#"
-                                            role="tab" aria-controls="pills-profile" aria-selected="false">Mês</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link orders" data-toggle="pill" id="orders_year" href="#"
-                                            role="tab" aria-controls="pills-contact" aria-selected="false">Ano</a>
-                                    </li>
-                                </ul>
-                            </div>
+<div class="col-md-12">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h4 class="mt-2">Ordens de serviço</h4>
+                        </div>
+                        <div class="col-md-6">
+                            <ul class="nav nav-pills justify-content-end" id="pills-tab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link orders active" data-toggle="pill" id="orders_today" href="#"
+                                        role="tab" aria-controls="pills-home" aria-selected="true">Hoje</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link orders" data-toggle="pill" id="orders_month" href="#" role="tab"
+                                        aria-controls="pills-profile" aria-selected="false">Mês</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link orders" data-toggle="pill" id="orders_year" href="#" role="tab"
+                                        aria-controls="pills-contact" aria-selected="false">Ano</a>
+                                </li>
+                            </ul>
                         </div>
                     </div>
-                    <div class="card-body">
-                        <canvas id="orders" height="72"></canvas>
-                    </div>
+                </div>
+                <div class="card-body">
+                    <canvas id="orders" height="72"></canvas>
                 </div>
             </div>
         </div>
     </div>
+</div>
 {{-- </div> --}}
 
 <div class="col-12 mt-3">
@@ -216,6 +219,6 @@
 @endsection
 
 @push('scripts')
-    <script src="{{ asset('js/Chart.min.js') }}"></script>
-    <script src="{{ asset('js/dashboard.js') }}"></script>
+<script src="{{ asset('js/Chart.min.js') }}"></script>
+<script src="{{ asset('js/dashboard.js') }}"></script>
 @endpush

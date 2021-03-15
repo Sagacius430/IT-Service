@@ -22,7 +22,6 @@ class OsController extends Controller
         $clients = Client::all();
         $users = User::all();
 
-
         // $creationDate = Carbon::createFromFormat('Y-m-d', '1999-01-01');
         $dateNow = Carbon::now();
 
@@ -55,6 +54,8 @@ class OsController extends Controller
             'em_garantia'     => Os::where('guarantee', '!=', '')->count(),
         ];
 
+        $waiting = ['aguardando' => Os::where('status', 'aguardando serviço')];
+
         //se a data de garantia for igual ou maior que hoje, recebe null
         // if($status('guarantee') >= now()){
 
@@ -69,7 +70,7 @@ class OsController extends Controller
 
         // $counted = Machine::where('brand', '!=', null)->count();  
 
-        return view('os.index', compact('orders', 'clients', 'users', 'counts', 'status', 'dateNow'));
+        return view('os.index', compact('orders', 'clients', 'users', 'counts', 'status', 'dateNow', 'waiting'));
     }
 
     /**
@@ -97,9 +98,9 @@ class OsController extends Controller
      */
     public function store(Request $request)
     {
-        
+
         $order = new Os;
-        
+
         $order->user_id = $request->user_id;
         $order->client_id = $request->client_id;
         $order->machine_id = $request->machine_id;
@@ -122,12 +123,12 @@ class OsController extends Controller
         // DB::beginTransaction();
 
         // try {
-            
+
         //     $order = new Os;
         //     $order->user_id = $request->user_id;
         //     $order->client_id = $request->client_id;
-            
-            
+
+
         //     foreach ($request->os as $data) {
         //         $order->machine_id = $data->machine_id;
         //     }
@@ -169,7 +170,7 @@ class OsController extends Controller
         $machine = Machine::find($os->machine_id);
         $service = Service::find($os->service_id);
         $services = Service::all();
-        
+
         return view('os.edit', compact('os', 'user', 'client', 'machine', 'service', 'services'));
     }
 
@@ -183,30 +184,29 @@ class OsController extends Controller
     public function update(Request $request, $id)
     {
         DB::beginTransaction();
-        try{
+        try {
             $order = Os::findOrFail($id);
-            
-            $order->update($request['os']);
-            if($order->status == 'Finalizado'){
 
-                $order->guarantee = Carbon::now()->addMonth(3)->format('Y-m-d');                    
+            $order->update($request['os']);
+            if ($order->status == 'Finalizado') {
+
+                $order->guarantee = Carbon::now()->addMonth(3)->format('Y-m-d');
                 $order->finish = Carbon::now();
-                $order->save(); 
+                $order->save();
             }
             if ($order->contacted == null) {
                 $order->contacted = true;
                 $order->save();
             }
-            
+
 
             DB::commit();
-        }catch(\Exception $exception){
+        } catch (\Exception $exception) {
 
             DB::rollback();
             return back()
-                ->with('msg_error','Erro no servidor ao atualizar oredem de serviço');
-            
-        }      
+                ->with('msg_error', 'Erro no servidor ao atualizar oredem de serviço');
+        }
 
         return redirect()
             ->route('os.index')

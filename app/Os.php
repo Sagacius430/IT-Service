@@ -43,4 +43,5 @@ class Os extends Model
         return $this->belongsTo('App\Service', 'id', 'service_id');
     }
     
+    
 }

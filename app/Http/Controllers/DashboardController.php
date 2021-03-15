@@ -17,11 +17,12 @@ class DashboardController extends Controller
     {
         $counts = [
             
-            'clients'  => Client::count(),
-            'users'    => User::count(),
-            'services' => Service::count(),
-            'machines' => Machine::count(),
-            'os'       => Os::count(),
+            'clients'   => Client::count(),
+            'users'     => User::count(),
+            'services'  => Service::count(),
+            'machines'  => Machine::count(),
+            'os'        => Os::count(),
+            'waitPiece' => Os::where('status', 'Aguardando peça')->count(),
 
         ];
 

@@ -1,6 +1,5 @@
 $(function () {
-    var colors = ['#17a2b8', '#28a745', '#ffc107', '#dc3545', '#666666', '#000000'];
-
+   
     // Ordens de serviço
     // Pega o elemento e cria a instância do chart
     var ordersCtx = $("#orders");
@@ -47,8 +46,9 @@ $(function () {
                     label: 'Ordens de serviço',
                     data: data,
                     borderWidth: 1,
-                    borderColor: '#28a745',
-                    backgroundColor: '#ffc107'
+                    borderColor: '#BDB76B',
+                    backgroundColor: '#F0E68C'
+                    
                 }],
             },
             options: {

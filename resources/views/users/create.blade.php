@@ -101,7 +101,7 @@
                 </div>                           
         </div> 
         <div class="card-footer text-right">
-            <button type="submit" class="btn btn-success">Enviar</button>
+            <button type="submit" class="btn btn-success"><i class='fa fa-save'></i> Enviar</button>
         </div>
         </form>   
     </div>

@@ -20,6 +20,7 @@
                         <th class="align-middle">Cadastrado</th>
                         <th class="align-middle">Nome</th>
                         <th class="align-middle">Telefone</th>
+                        <th class="aling-right">Computadores</th>
                     </thead>
                     <tbody>                        
                         @foreach ($clients as $client)

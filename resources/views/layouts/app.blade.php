@@ -51,11 +51,11 @@
                             
                             <a class="nav-link collapsed" href="{{route('os.index')}}" >
                                 <div class="sb-nav-link-icon"><i class="fas fa-file-signature"></i></div>
-                                Orden de Serviço                                
+                                Painel de O.S.                                
                             </a>                            
                             <a class="nav-link collapsed" href="{{route('clients.index')}}">
                                 <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
-                                Clientes                                
+                               Clientes/OS              
                             </a>
                             <a class="nav-link" href="{{route('machines.index')}}">
                                 <div class="sb-nav-link-icon"><i class="fas fa-laptop-code"></i></div>
